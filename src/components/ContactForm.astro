@@ -1,0 +1,210 @@
+---
+import FormField from '@/components/FormField.astro';
+import Button from '@/components/Button.astro';
+import MailtoLink from '@/components/MailtoLink.astro';
+import { offers } from '@/content/offers';
+import { makeChallenge, encodeAnswer } from '@/lib/captcha';
+
+// Contact / booking form (R5, R6, R7, R11, R12 / TD1, TD2, TD3).
+//
+// Progressive enhancement (TD1): a server-rendered form with method POST and
+// data-netlify that natively POSTs to Netlify and lands on /danke when JS is
+// off. The bundled script module (TD3: Vite-bundled, not is-inline, no
+// framework island) upgrades it to client validation, a captcha gate, AJAX
+// inline-replace, and an inline error with value preservation.
+//
+// Spam (R6): Netlify honeypot field plus a first-party math question whose
+// answer is XOR+base64 encoded (TD2) into data-captcha and verified client-side.
+const { form, confirmation, error } = offers;
+const challenge = makeChallenge();
+const captchaToken = encodeAnswer(challenge.answer);
+
+// Validation messages handed to the bundled script (keeps copy in content).
+const messages = JSON.stringify({
+  name: form.errors.name,
+  email: form.errors.email,
+  emailFormat: form.errors.emailFormat,
+  message: form.errors.message,
+  captcha: form.errors.captcha,
+});
+---
+
+<div data-contact-region>
+  <form
+    data-contact
+    name="kontakt"
+    method="POST"
+    action="/danke"
+    data-netlify="true"
+    data-netlify-honeypot={form.honeypotName}
+    data-captcha={captchaToken}
+    data-ajax-action="/"
+    data-messages={messages}
+    class="grid gap-6"
+  >
+    {/* Netlify needs this in the static markup; also part of the AJAX body. */}
+    <input type="hidden" name="form-name" value="kontakt" />
+
+    {/* Honeypot — visually hidden, off the tab order, hidden from AT (R6). */}
+    <p class="hidden" aria-hidden="true">
+      <label>
+        Dieses Feld bitte leer lassen:
+        <input name={form.honeypotName} tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <FormField label={form.fields.name} name="name" required errorId="err-name" />
+      <FormField label={form.fields.email} name="email" type="email" required errorId="err-email" />
+      <FormField label={form.fields.company} name="company" />
+      <FormField label={form.fields.role} name="role" />
+    </div>
+
+    <FormField
+      label={form.fields.message}
+      name="message"
+      textarea
+      required
+      placeholder={form.messagePlaceholder}
+      errorId="err-message"
+    />
+
+    <FormField
+      label={`${form.captchaLabel}: ${challenge.question}`}
+      name="captcha"
+      type="text"
+      errorId="err-captcha"
+      class="max-w-xs"
+    />
+
+    <p class="font-mono text-xs leading-relaxed text-muted">{form.privacyNote}</p>
+
+    {/* Inline submit-failure (R12/AC11) — hidden until the AJAX submit fails. */}
+    <div
+      data-form-error
+      role="alert"
+      aria-live="assertive"
+      hidden
+      class="border-[3px] border-neon-pink bg-surface px-4 py-3"
+    >
+      <p class="text-paper">{error.body}</p>
+      <MailtoLink
+        subject="Anfrage über cib.is"
+        class="mt-2 inline-block font-mono text-sm font-bold uppercase tracking-[0.15em] text-neon-green underline underline-offset-4"
+      >
+        {form.mailtoFallbackLabel} →
+      </MailtoLink>
+    </div>
+
+    <div>
+      <Button type="submit" size="lg">{form.submitLabel} →</Button>
+    </div>
+  </form>
+
+  {/* Inline success (R7/R11/AC10) — replaces the form in place on AJAX success. */}
+  <div
+    data-contact-success
+    hidden
+    tabindex="-1"
+    role="status"
+    aria-live="polite"
+    class="border-[3px] border-neon-green bg-surface p-8 sm:p-10"
+  >
+    <p class="mb-3 font-mono text-xs font-bold uppercase tracking-[0.25em] text-gradient">
+      Anfrage gesendet
+    </p>
+    <h3 class="text-[clamp(1.5rem,4vw,2.5rem)]">{confirmation.headline}</h3>
+    <p class="mt-4 max-w-xl text-lg leading-relaxed text-muted">{confirmation.body}</p>
+  </div>
+</div>
+
+<script>
+  import { validate } from '@/lib/formValidate';
+  import { decodeAnswer, verify } from '@/lib/captcha';
+
+  const region = document.querySelector<HTMLElement>('[data-contact-region]');
+  const form = region?.querySelector<HTMLFormElement>('form[data-contact]');
+  const success = region?.querySelector<HTMLElement>('[data-contact-success]');
+  const errorBox = form?.querySelector<HTMLElement>('[data-form-error]');
+
+  if (form && success && errorBox) {
+    // Progressive enhancement: with JS active we own validation, so turn off
+    // native constraint validation (which would otherwise swallow the submit
+    // event) and show our inline, screen-reader-accessible messages instead.
+    // The no-JS path keeps the native `required`/`type=email` checks.
+    form.noValidate = true;
+
+    const messages = JSON.parse(form.dataset.messages || '{}');
+    const captchaAnswer = decodeAnswer(form.dataset.captcha || '');
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    const fieldNames = ['name', 'email', 'message', 'captcha'] as const;
+
+    const clearErrors = () => {
+      errorBox.hidden = true;
+      for (const f of fieldNames) {
+        const input = form.elements.namedItem(f) as HTMLInputElement | null;
+        const node = document.getElementById(`err-${f}`);
+        if (input) input.removeAttribute('aria-invalid');
+        if (node) node.textContent = '';
+      }
+    };
+
+    const showFieldError = (field: string, msg: string) => {
+      const input = form.elements.namedItem(field) as HTMLInputElement | null;
+      const node = document.getElementById(`err-${field}`);
+      if (input) input.setAttribute('aria-invalid', 'true');
+      if (node) node.textContent = msg;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const values = {
+        name: (form.elements.namedItem('name') as HTMLInputElement)?.value ?? '',
+        email: (form.elements.namedItem('email') as HTMLInputElement)?.value ?? '',
+        message: (form.elements.namedItem('message') as HTMLTextAreaElement)?.value ?? '',
+      };
+      const { valid, errors } = validate(values, messages);
+
+      let firstInvalid: string | null = null;
+      for (const f of ['name', 'email', 'message']) {
+        if (errors[f]) {
+          showFieldError(f, errors[f]);
+          firstInvalid = firstInvalid ?? f;
+        }
+      }
+
+      const captchaValue = (form.elements.namedItem('captcha') as HTMLInputElement)?.value ?? '';
+      const captchaOk = verify(captchaValue, captchaAnswer);
+      if (!captchaOk) {
+        showFieldError('captcha', messages.captcha);
+        firstInvalid = firstInvalid ?? 'captcha';
+      }
+
+      if (!valid || !captchaOk) {
+        (form.elements.namedItem(firstInvalid as string) as HTMLElement | null)?.focus();
+        return; // no network request fired
+      }
+
+      submitBtn?.setAttribute('disabled', 'true');
+      try {
+        const body = new URLSearchParams(new FormData(form) as any).toString();
+        const res = await fetch(form.dataset.ajaxAction || '/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        // Success: replace the form in place, move focus to the confirmation.
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      } catch {
+        errorBox.hidden = false; // values stay in their inputs (R12)
+        submitBtn?.removeAttribute('disabled');
+      }
+    });
+  }
+</script>

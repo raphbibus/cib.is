@@ -1,6 +1,6 @@
 # Epic PRD — Offers & Contact Funnel
 
-> **Status:** Drafting · **Confidence:** 30% · **Brainstorm runs:** 1
+> **Status:** ✅ Ready to build · **Confidence:** 92% · **Brainstorm runs:** 3
 > **Source:** [Roadmap](../roadmap.md)
 
 ## 1. Context
@@ -22,14 +22,17 @@ carousels). The central design challenge is an **anti-funnel**: a page that conv
 
 The **490 € net = gross** Friday is unusually cheap for consulting. That price is a signal:
 it reads as *Kleinunternehmer / solo operator*, and it lowers the risk barrier enough for a
-skeptic to say yes once. Whether that one Friday is the *product* or the *front door* to
-larger engagements is the first open question — and it reshapes the entire page.
+skeptic to say yes once. (Ralph: the price can be kept low because I'm working hands-on at a
+job where I can eat my own dog food every day. I take less money and trade it against my
+off-day and more experience.) The Friday is sold as **the product** — one repeatable thing,
+not a teaser for larger engagements.
 
-**Locked decisions (from roadmap):** Astro static, zero-JS default; Tailwind 4; Netlify
-Forms (free tier, 100 submissions/mo) with honeypot + GDPR-friendly captcha; request-only
-booking (Ralph confirms a Friday date manually by email); obfuscated mailto fallback;
-German only; no tracking / no cookies / no third-party scripts (so no cookie banner);
-`noindex` until Epic 4; Lighthouse ≥ 95; WCAG AA.
+**Locked decisions (from roadmap):** Astro static; Tailwind 4; Netlify Forms (free tier,
+100 submissions/mo) with honeypot + GDPR-friendly captcha; request-only booking (Ralph
+confirms a Friday date manually by email); obfuscated mailto fallback; German only; no
+tracking / no cookies / no third-party scripts (so no cookie banner); `noindex` until
+Epic 4; Lighthouse ≥ 95; WCAG AA. (Ralph: zero-JS is a guideline, not a fixed rule —
+discussed in Epic 1; JS is acceptable where it earns its keep, e.g. AJAX form submit.)
 
 **In scope:** Offers page(s); funnel wiring landing → offers → contact; the booking/contact
 form via Netlify Forms; success state; client-side validation; obfuscated mailto.
@@ -38,58 +41,99 @@ automated scheduling; CRM.
 
 ## 2. Requirements
 
-<!-- R1: ... (populated as decisions are reconciled) -->
+- **R1** — The Offers page sells the Friday as a single, self-contained, repeatable product
+  (one whole Friday with the client). No upsell to multi-day packages or retainers.
+- **R2** — Price is shown as **490 €** with an explicit *net = gross* note (Kleinunternehmer­
+  regelung). A transparent surcharge note states that travel costs (train/hotel) are added on
+  top when the client location is more than ~2 hours' drive from Bamberg.
+- **R3** — A single scrolling Offers page contains three offer sections in priority order —
+  (1) Leadership training/coaching, (2) Organizational development, (3) Agile coaching —
+  followed by the Friday-model section.
+- **R4** — The 490 € price is displayed prominently and without interaction (in the
+  Friday-model section and near the primary CTA), framed as radical transparency.
+- **R5** — The booking form collects: name, email, company, role, and a free-text message
+  ("what's the pain / what would a good Friday change?"). Name, email, and message are
+  required and client-side validated (email format); company and role are optional.
+- **R6** — Spam protection uses a Netlify honeypot field **plus** a first-party logic/math
+  question rendered at build time. No Google reCAPTCHA, no third-party scripts, no cookies.
+- **R7** — On a successful submission the form is replaced in place by a confirmation message
+  with no page navigation (AJAX submit to Netlify Forms; JS permitted per the guideline note).
+- **R8** — The Friday is delivered **on-site at the client by default**; remote delivery is
+  available on request. The Friday-model copy states both.
+- **R9** — A single primary CTA ("Freitag anfragen", final copy TBD) appears at the **top and
+  bottom** of the Offers page and anchors to the on-page contact-form section; no competing
+  primary CTAs exist. The booking form lives as a section on the Offers page (the CTA's anchor
+  target). The Epic 1 landing CTA links to the Offers page.
+- **R10** — The fallback email is an **obfuscated, JS-assembled mailto**: the raw address does
+  not appear in the served static HTML and the link opens the correct mailto on click.
+- **R11** — The post-submit confirmation states a concrete expectation: Ralph replies
+  **personally within 2 Werktage** and proposes a Friday date.
+- **R12** — If the AJAX submit fails, an **inline error** is shown, the user's entered data is
+  **preserved**, and the obfuscated mailto fallback is surfaced as an alternative.
 
 ## 3. Acceptance Criteria
 
-<!-- AC1: ... (populated as decisions are reconciled) -->
+- **AC1** — On the Offers page, the Friday appears as the headline product priced 490 €, with
+  visible *net = gross* wording and the ">2h-from-Bamberg ⇒ travel costs on top" note.
+- **AC2** — One Offers route renders all three offer sections in order leadership → org dev →
+  agile, plus the Friday-model section, on a single scrolling page.
+- **AC3** — The 490 € price is visible on first paint without any interaction.
+- **AC4** — The form shows fields name/email/company/role/message; submitting with the three
+  required fields filled succeeds; a missing required field or malformed email blocks submit
+  with an inline, screen-reader-accessible validation message.
+- **AC5** — The Offers/contact page makes **zero** third-party network requests (verify in the
+  network tab); a wrong captcha answer is rejected; a correct answer with an empty honeypot
+  submits successfully and the entry appears in the Netlify Forms dashboard.
+- **AC6** — After a valid submit, the confirmation replaces the form without a navigation, and
+  the submission appears in the Netlify dashboard.
+- **AC7** — The Friday-model section states on-site delivery as default and remote on request.
+- **AC8** — The primary CTA appears at top and bottom; clicking either jumps to the on-page
+  contact-form section; only one primary-CTA style is present on the page.
+- **AC9** — The served static HTML contains no plaintext email address; with JS enabled the
+  fallback link resolves to the correct mailto and works on click.
+- **AC10** — The inline confirmation text includes the "persönlich, binnen 2 Werktage" promise.
+- **AC11** — Simulating a failed submit shows an inline error, retains the entered field
+  values, and surfaces the mailto fallback.
 
-> Carried from roadmap (baseline, will be formalized into AC as decisions land):
-> Full click path landing → offers → submit a test request → success state; submission
-> appears in Netlify Forms; obfuscated email resists trivial scraping yet works on click.
+> Baseline click-path (from roadmap): landing → offers → submit a test request → success
+> state; submission appears in Netlify Forms; obfuscated email resists trivial scraping yet
+> works on click. (Formalized further by R/AC above + Q9 below.)
 
 ## 4. Open Questions
 
-> How to answer: change `[ ]` to `[x]` on **one** option per question, or fill its `Other:` line.
-> Don't delete a question — it moves to "Resolved Decisions" automatically on the next run.
-> The `**(recommended)**` label is a suggestion only; nothing is pre-selected.
+✅ **Ready to build.** All blocking decisions are resolved (D1–D11) and every Requirement
+(R1–R12) maps to a verifiable Acceptance Criterion (AC1–AC11). A builder can implement the
+Offers page + contact funnel from the sections above without guessing on structure, flow,
+pricing, form behavior, spam protection, success/error states, or delivery model.
 
-### Q1: Is the 490 € Friday the *product* or the *front door*?
-- [ ] **The product** — the whole business is selling individual Fridays; the page sells one repeatable thing.
-- [ ] **The front door (tripwire)** — the cheap Friday gets a skeptic into the room once; larger engagements are the real business. **(recommended)** — explains the low net=gross price, fits the "no upselling" voice (you earn the next step, you don't pitch it), and gives a skeptical Mittelstand buyer a low-risk first yes.
-- [ ] **Both, explicitly tiered** — Friday as the named entry point, with one or two named follow-on engagement shapes shown honestly.
-- [ ] Other: 
+Start from **§2 Requirements** and **§3 Acceptance Criteria**; verify against the baseline
+click-path note.
 
-### Q2: How are the three offers (org dev, agile coaching, leadership) structured on the site?
-- [ ] **One scrolling Offers page** — three offer sections + the Friday model, single page. **(recommended)** — simplest static build, keeps the funnel one clear path, easiest to keep on-brand and fast.
-- [ ] **Three dedicated service pages + an Offers hub** — more SEO surface and depth, but more to maintain and a longer path to the form.
-- [ ] **Folded into the landing page** — no separate Offers page; offers + CTA live on the homepage.
-- [ ] Other: 
+### Deferred (non-blocking)
+These don't block the build — sensible defaults are fine, and Ralph can finalize during
+implementation/content authoring:
 
-### Q3: How transparent is pricing on the page?
-- [ ] **Show 490 € net = gross prominently** — price stated up front as a feature of the brand (radical transparency = the punk/no-bullshit proof). **(recommended)** — pricing openness *is* the differentiator vs. "request a quote" consultants; pre-qualifies and builds trust before the form.
-- [ ] **Price only at the booking/contact step** — keep the offer story first, reveal price when they commit.
-- [ ] **No price shown** — "request a proposal," price discussed individually.
-- [ ] Other: 
-
-### Q4: How much does the booking form ask?
-- [ ] **Minimal** — name, email, message only; lowest friction.
-- [ ] **Minimal + light qualifiers** — name, email, company, role, and "what's the pain / what would a good Friday change?" **(recommended)** — gives Ralph enough to triage and personalize the manual confirmation, without the form feeling like a sales-qualification gate.
-- [ ] **Full qualification** — adds budget, team size, timeline, preferred date(s).
-- [ ] Other: 
-
-### Q5: Which GDPR-friendly captcha, given "no third-party scripts / no cookies"?
-- [ ] **Honeypot only** — invisible field, zero friction; no human-facing challenge.
-- [ ] **Honeypot + a homegrown logic/math question** — e.g. a small static question rendered server-side at build. **(recommended)** — stays fully first-party (no Google reCAPTCHA, no cookies, no third-party request → preserves the no-cookie-banner promise) while adding a real bot speed bump.
-- [ ] **Netlify's built-in reCAPTCHA** — easy, but loads Google scripts/cookies → conflicts with the no-third-party / no-banner principle.
-- [ ] Other: 
-
-### Q6: What does success look like after submitting?
-- [ ] **Inline success state** — replace the form with a confirmation in place, no navigation. **(recommended)** — fastest feedback, works cleanly with static Astro + Netlify Forms, no extra page to maintain.
-- [ ] **Dedicated `/danke` thank-you page** — clean URL, redirect after submit; easier to expand later (e.g. "what happens next" content).
-- [ ] Other: 
+- **Offer & Friday copy (German):** the actual section text and the Friday-model wording
+  (roadmap says content is provided at refinement). Default: draft on-brand placeholder copy.
+- **Final CTA label:** "Freitag anfragen" assumed; confirm exact wording.
+- **Route/slug:** German URL for the Offers page (e.g. `/angebot` vs `/leistungen`).
+  Default: pick one in implementation; the form is an anchored section on that page.
+- **Response-time number:** "2 Werktage" assumed in R11 — confirm Ralph can hold to it.
+- **Captcha question phrasing & field naming:** exact homegrown logic question and the
+  honeypot field name — implementation detail; keep it screen-reader-accessible per WCAG AA.
 
 ## 5. Resolved Decisions
 
-<!-- | D# | Question | Chosen | Produced | -->
-_None yet — answer the questions above and re-run `/brainstorm Offers & Contact Funnel`._
+| D# | Question | Chosen | Produced |
+|----|----------|--------|----------|
+| D1 | Q1 — Friday: product or front door? | **The product** (single repeatable Friday; travel costs on top >2h from Bamberg) | R1, R2, AC1 |
+| D2 | Q2 — Offers page structure | **One scrolling Offers page** (priority order: leadership, org dev, agile) | R3, AC2 |
+| D3 | Q3 — Pricing transparency | **Show 490 € net = gross prominently** (Kleinunternehmerregelung) | R4, AC3 |
+| D4 | Q4 — Booking form depth | **Minimal + light qualifiers** (name, email, company, role, message) | R5, AC4 |
+| D5 | Q5 — Captcha within no-third-party constraint | **Honeypot + homegrown logic question** | R6, AC5 |
+| D6 | Q6 — Success state | **Inline success (AJAX, no navigation)** | R7, AC6 |
+| D7 | Q7 — Delivery mode | **On-site by default** (remote on request) | R8, AC7 |
+| D8 | Q8 — Funnel CTA wiring | **One primary CTA repeated** (top + bottom, anchors to on-page form) | R9, AC8 |
+| D9 | Q9 — Email obfuscation | **JS-assembled mailto** | R10, AC9 |
+| D10 | Q10 — Confirmation promise | **Personal reply within 2 Werktage** | R11, AC10 |
+| D11 | Q11 — Submit failure handling | **Inline error + preserve input + mailto fallback** | R12, AC11 |

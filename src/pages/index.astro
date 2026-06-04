@@ -4,7 +4,6 @@ import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import Card from '@/components/Card.astro';
 import Prose from '@/components/Prose.astro';
-import MailtoLink from '@/components/MailtoLink.astro';
 import { Image } from 'astro:assets';
 import portrait from '@/assets/img/IMG_0514.webp';
 import shot2 from '@/assets/img/IMG_0073.webp';
@@ -133,9 +132,12 @@ const ticketButtonClass =
           <h2 class="text-[clamp(1.75rem,5vw,3.5rem)]">{cta.headline}</h2>
           <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
           <div class="mt-8">
-            <MailtoLink subject="Anfrage über cib.is" class={ticketButtonClass}>
+            {/* Epic 2 (R9/AC8): the landing primary CTA now leads into the
+                Offers funnel instead of opening a mailto. The obfuscated mailto
+                still lives in the Footer. */}
+            <a href="/angebot" class={ticketButtonClass}>
               {cta.buttonLabel} →
-            </MailtoLink>
+            </a>
           </div>
         </div>
         <div class="perforation h-[18px] border-t-[3px] border-dashed border-line" aria-hidden="true"></div>

@@ -2,30 +2,31 @@ import { test, expect } from '@playwright/test';
 
 // AC14 — header nav anchors; AC5 — story-first DOM order.
 test.describe('header nav + story-first arc', () => {
-  test('header shows the wordmark and only in-page anchor links (AC14)', async ({ page }) => {
+  test('header shows the wordmark (home) and a Story link back to the start page (AC14)', async ({
+    page,
+  }) => {
     await page.goto('/');
     const header = page.locator('header');
-    await expect(header.getByRole('link', { name: /cib.*is/i })).toBeVisible();
+    // wordmark links home
+    await expect(header.getByRole('link', { name: /cib.*is/i })).toHaveAttribute('href', '/');
 
+    // Epic 2: the nav is a single "Story" link that leads back to the start page.
     const navLinks = header.locator('nav a');
-    await expect(navLinks).toHaveCount(2);
-    const hrefs = await navLinks.evaluateAll((els) =>
-      els.map((e) => (e as HTMLAnchorElement).getAttribute('href')),
-    );
-    for (const href of hrefs) {
-      expect(href!.startsWith('#')).toBe(true); // in-page only, no routes
-      // target id must exist
-      await expect(page.locator(href!)).toHaveCount(1);
-    }
+    await expect(navLinks).toHaveCount(1);
+    await expect(navLinks.first()).toHaveAttribute('href', '/#story');
+    // its target exists on the home page
+    await expect(page.locator('#story')).toHaveCount(1);
   });
 
-  test('clicking a nav anchor scrolls to the matching section (AC14)', async ({ page }) => {
+  test('clicking the Story nav link scrolls to the story section on the home page (AC14)', async ({
+    page,
+  }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Kontakt' }).click();
-    await expect(page).toHaveURL(/#kontakt$/);
+    await page.getByRole('link', { name: 'Story' }).click();
+    await expect(page).toHaveURL(/\/#story$/);
     // smooth-scroll is async — poll until the section top reaches the fold
     await expect
-      .poll(async () => (await page.locator('#kontakt').boundingBox())!.y, { timeout: 5000 })
+      .poll(async () => (await page.locator('#story').boundingBox())!.y, { timeout: 5000 })
       .toBeLessThan(200);
   });
 

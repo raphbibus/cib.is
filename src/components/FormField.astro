@@ -1,6 +1,11 @@
 ---
-// Label + input primitive (R5/A4). Built now, consumed by the Epic 2 contact
-// form. Brutalist field with a visible focus ring.
+// Label + input primitive (R5/A4). Consumed by the Epic 2 contact form.
+// Brutalist field with a visible focus ring.
+//
+// Epic 2 extension (R5/AC4): optional accessible inline validation. Pass
+// `errorId` to render a persistent `role="alert"` live-region node the bundled
+// form script can fill; pass `error` to render a server-side error + mark the
+// input `aria-invalid`. Both are optional, so Epic 1 callers are unaffected.
 interface Props {
   label: string;
   name: string;
@@ -8,6 +13,10 @@ interface Props {
   required?: boolean;
   placeholder?: string;
   textarea?: boolean;
+  /** id of the inline error/alert node; enables aria-describedby wiring */
+  errorId?: string;
+  /** server-rendered error message; also flips the input to aria-invalid */
+  error?: string;
   class?: string;
 }
 
@@ -18,11 +27,16 @@ const {
   required = false,
   placeholder,
   textarea = false,
+  errorId,
+  error,
   class: cls = '',
 } = Astro.props;
 
 const fieldClass =
-  'w-full border-[3px] border-paper bg-surface px-4 py-3 font-body text-paper placeholder:text-muted focus:border-neon-green';
+  'w-full border-[3px] border-paper bg-surface px-4 py-3 font-body text-paper placeholder:text-muted focus:border-neon-green aria-[invalid=true]:border-neon-pink';
+
+const describedBy = errorId || undefined;
+const invalid = error ? 'true' : undefined;
 ---
 
 <label class={`block ${cls}`}>
@@ -31,9 +45,37 @@ const fieldClass =
   </span>
   {
     textarea ? (
-      <textarea name={name} required={required} placeholder={placeholder} rows="5" class={fieldClass} />
+      <textarea
+        name={name}
+        required={required}
+        placeholder={placeholder}
+        rows="5"
+        class={fieldClass}
+        aria-invalid={invalid}
+        aria-describedby={describedBy}
+      />
     ) : (
-      <input type={type} name={name} required={required} placeholder={placeholder} class={fieldClass} />
+      <input
+        type={type}
+        name={name}
+        required={required}
+        placeholder={placeholder}
+        class={fieldClass}
+        aria-invalid={invalid}
+        aria-describedby={describedBy}
+      />
+    )
+  }
+  {
+    errorId && (
+      <span
+        id={errorId}
+        role="alert"
+        aria-live="polite"
+        class="mt-1.5 block min-h-[1.25em] font-mono text-xs font-medium text-neon-pink"
+      >
+        {error}
+      </span>
     )
   }
 </label>

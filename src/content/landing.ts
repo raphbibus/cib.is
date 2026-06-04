@@ -103,7 +103,7 @@ export const landing: Landing = {
     id: 'kontakt',
     kicker: 'Der nächste Schritt',
     headline: 'Lust auf eine Organisation, die nicht gegen sich selbst arbeitet?',
-    body: 'Aktuell berate ich in Teilzeit – fokussiert, ehrlich, in überschaubaren Einheiten. Schreib mir kurz, worum es geht. Das ausführliche Angebot folgt in Kürze.',
-    buttonLabel: 'Schreib mir',
+    body: 'Aktuell berate ich in Teilzeit – fokussiert, ehrlich, in überschaubaren Einheiten. Das konkrete Angebot ist ein Freitag bei euch. Schau es dir an.',
+    buttonLabel: 'Angebot ansehen',
   },
 };

@@ -56,6 +56,7 @@
 
   --color-neon-pink: #ff2d95;
   --color-neon-green: #39ff14;
+  --color-neon-cyan: #2de2e6;  /* third accent (agile) — 12.3:1 on ink */
   --gradient-accent: linear-gradient(115deg, var(--color-neon-pink) 10%, var(--color-neon-green) 90%);
 
   --font-display: "Anton", "Arial Narrow", system-ui, sans-serif;
