@@ -97,7 +97,7 @@ export const offers: OffersContent = {
     title: 'Der Freitag',
     body: 'Ein ganzer Freitag, nur mit euch. Vormittags verstehe ich, woran es wirklich hakt – mit den Leuten, die es betrifft. Nachmittags arbeiten wir an einem konkreten Schritt nach vorn. Am Ende habt ihr keinen Foliensatz, sondern etwas, das ihr ab Montag anfassen könnt. Ein abgeschlossenes Ding, kein Einstieg in ein großes Programm.',
     price: '490 €',
-    priceNote: 'Festpreis pro Freitag. Netto = brutto: Ich arbeite als Kleinunternehmer (§19 UStG), es kommt keine Umsatzsteuer obendrauf.',
+    priceNote: 'Festpreis pro Freitag. Netto = brutto: Ich arbeite als Kleinunternehmer. Gemäß §19 UStG wird keine Umsatzsteuer berechnet.',
     travelNote: 'Reisekosten transparent on top: Ab etwa 2 Stunden Anfahrt kommt immer eine Hotelübernachtung dazu. Die Fahrt – egal ob Bahn oder Auto – berechne ich pauschal mit 30 Cent pro Kilometer ab Bamberg Hauptbahnhof. Sonst nichts.',
     delivery: 'Standard ist vor Ort bei euch – da entsteht das meiste. Remote geht auf Anfrage, wenn es nicht anders passt.',
   },

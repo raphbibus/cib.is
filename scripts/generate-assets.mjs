@@ -20,25 +20,39 @@ function dataUri(relPath) {
 const display = dataUri('src/assets/fonts/anton-400.woff2');
 const mono = dataUri('src/assets/fonts/ibm-plex-mono-400.woff2');
 
+// Promo photo behind the OG card (R10/T7). A raster source is required: major
+// social scrapers don't reliably render WebP og:image, so we composite the
+// photo + brand text and screenshot to PNG at 1200×630.
+const photo = `data:image/webp;base64,${readFileSync(new URL('../placeholders/1.webp', import.meta.url)).toString('base64')}`;
+
 const fontFace = `
   @font-face { font-family:'AN'; src:url(${display}) format('woff2'); font-weight:400; }
   @font-face { font-family:'PM'; src:url(${mono}) format('woff2'); font-weight:400; }
 `;
 
-// Dark band-poster OG card: near-black stage, neon gradient kicker + dot, Anton headline.
+// Dark band-poster OG card: promo photo stage, dark scrim for legibility, neon
+// gradient kicker + dot, Anton headline (R10/T7).
 const ogHtml = `<!doctype html><html><head><meta charset="utf-8"><style>
   ${fontFace}
   *{margin:0;box-sizing:border-box}
   html,body{width:1200px;height:630px}
-  body{background:${INK};color:${PAPER};padding:76px;display:flex;flex-direction:column;justify-content:space-between;border:14px solid ${PAPER}}
+  body{position:relative;background:${INK};color:${PAPER};padding:76px;display:flex;flex-direction:column;justify-content:flex-end;border:14px solid ${PAPER};overflow:hidden}
+  .photo{position:absolute;inset:0;background-image:url('${photo}');background-size:cover;background-position:center top}
+  /* Dark scrim: keep the bottom legible, let the face read up top. */
+  .scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,11,11,.15) 0%, rgba(11,11,11,.55) 45%, rgba(11,11,11,.92) 100%)}
+  .stack{position:relative;display:flex;flex-direction:column;gap:18px}
   .kicker{font-family:'PM';font-weight:700;font-size:26px;letter-spacing:.2em;text-transform:uppercase;background-image:${GRADIENT};-webkit-background-clip:text;background-clip:text;color:transparent}
-  h1{font-family:'AN';font-weight:400;font-size:128px;line-height:.9;letter-spacing:.005em;text-transform:uppercase;max-width:1040px}
-  .mark{font-family:'AN';font-weight:400;font-size:46px;text-transform:uppercase;letter-spacing:.02em}
+  h1{font-family:'AN';font-weight:400;font-size:104px;line-height:.9;letter-spacing:.005em;text-transform:uppercase;max-width:1040px}
+  .mark{font-family:'AN';font-weight:400;font-size:42px;text-transform:uppercase;letter-spacing:.02em}
   .dot{background-image:${GRADIENT};-webkit-background-clip:text;background-clip:text;color:transparent}
 </style></head><body>
-  <div class="kicker">Organisationsingenieur · Agile Punk</div>
-  <h1>Schluss mit Org&#8209;Theater.<br>Organisationen, die liefern.</h1>
-  <div class="mark">RALPH CIB<span class="dot">.</span>IS</div>
+  <div class="photo"></div>
+  <div class="scrim"></div>
+  <div class="stack">
+    <div class="kicker">Organisationsingenieur · Agile Punk</div>
+    <h1>Schluss mit Org&#8209;Theater.<br>Organisationen, die liefern.</h1>
+    <div class="mark">RALPH CIB<span class="dot">.</span>IS</div>
+  </div>
 </body></html>`;
 
 const faviconSvg = readFileSync(new URL('../public/favicon.svg', import.meta.url), 'utf8');

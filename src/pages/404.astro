@@ -1,0 +1,40 @@
+---
+import Layout from '@/components/Layout.astro';
+import Button from '@/components/Button.astro';
+import MailtoLink from '@/components/MailtoLink.astro';
+
+// On-brand punk 404 (R11/AC11). Astro prerenders this to dist/404.html; Netlify
+// (and `astro preview`) serve it with a 404 status for unknown URLs. Clear
+// routes back: home, offers, and the obfuscated mailto.
+---
+
+<Layout
+  title="404 · Seite nicht gefunden — cib.is"
+  description="Diese Seite gibt es nicht (mehr). Zurück zum Anfang, zum Angebot – oder schreib mir."
+>
+  <section class="border-t-[3px] border-line py-(--spacing-section)">
+    <div class="mx-auto w-full max-w-6xl px-5">
+      <p class="mb-5 inline-block border-[3px] border-neon-pink px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-neon-pink">
+        Fehler 404
+      </p>
+      <h1 class="max-w-4xl text-[clamp(2.25rem,7vw,5.5rem)]">
+        Tote Hose.<br />Diese Seite gibt&#8217;s nicht.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        Vielleicht ein alter Link, ein Tippfehler – oder die Seite ist längst von der Bühne.
+        Egal. Hier geht&#8217;s zurück ins Programm:
+      </p>
+
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button href="/" variant="solid" size="lg">← Zur Startseite</Button>
+        <Button href="/angebot" variant="outline" size="lg">Zum Angebot</Button>
+        <MailtoLink
+          subject="Hilfe, ein toter Link auf cib.is"
+          class="font-mono text-sm font-medium uppercase tracking-[0.15em] text-paper underline underline-offset-4 hover:text-neon-green"
+        >
+          Schreib mir
+        </MailtoLink>
+      </div>
+    </div>
+  </section>
+</Layout>

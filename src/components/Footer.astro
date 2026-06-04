@@ -1,11 +1,14 @@
 ---
 import MailtoLink from './MailtoLink.astro';
 
-// Footer (R17/AC15): wordmark + copyright + working obfuscated mailto.
-// Reserved Impressum/Datenschutz slots exist as disabled placeholders — NO
-// live legal links yet (those arrive in Epic 4).
+// Footer (R17/AC15 + Epic 4 R7): wordmark + copyright + working obfuscated
+// mailto + live legal links. The Impressum/Datenschutz slots are now real
+// anchors on every page (go-public requirement).
 const year = new Date().getFullYear();
-const legalSlots = ['Impressum', 'Datenschutz'];
+const legalLinks = [
+  { label: 'Impressum', href: '/impressum' },
+  { label: 'Datenschutz', href: '/datenschutz' },
+];
 ---
 
 <footer class="border-t-[6px] border-paper bg-ink text-paper">
@@ -33,17 +36,14 @@ const legalSlots = ['Impressum', 'Datenschutz'];
             </a>
           </li>
           {
-            legalSlots.map((label) => (
+            legalLinks.map(({ label, href }) => (
               <li>
-                {/* Reserved for Epic 4 — rendered disabled, not a live link (AC15). */}
-                <span
-                  class="cursor-not-allowed font-mono text-xs uppercase tracking-[0.15em] text-muted/50"
-                  data-legal-slot={label.toLowerCase()}
-                  aria-disabled="true"
-                  title="Folgt in Kürze"
+                <a
+                  href={href}
+                  class="font-mono text-xs uppercase tracking-[0.15em] text-paper underline underline-offset-4 hover:text-neon-green"
                 >
                   {label}
-                </span>
+                </a>
               </li>
             ))
           }

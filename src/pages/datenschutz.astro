@@ -1,0 +1,55 @@
+---
+import Layout from '@/components/Layout.astro';
+import Section from '@/components/Section.astro';
+import Prose from '@/components/Prose.astro';
+import MailtoLink from '@/components/MailtoLink.astro';
+import { datenschutz } from '@/content/legal';
+
+// Datenschutzerklärung (DSGVO) — Epic 4 (R2, R5, R8). All copy from the typed
+// legal.ts module: Netlify/US disclosure, legal bases, retention, full rights
+// list. The contact email for exercising rights is the obfuscated MailtoLink.
+const { controller, sections, retention, rights, supervisoryAuthority } = datenschutz;
+---
+
+<Layout
+  title="Datenschutzerklärung · cib.is"
+  description="Datenschutzerklärung für cib.is: keine Cookies, kein Tracking. Hosting und Formulare über Netlify (USA) mit DPA und EU-Standardvertragsklauseln."
+>
+  <Section id="datenschutz" kicker="DSGVO" title="Datenschutzerklärung">
+    <Prose>
+      <h2>Verantwortlicher</h2>
+      <p>{controller}</p>
+
+      {sections.map((section) => (
+        <>
+          <h2>{section.heading}</h2>
+          {section.body.map((p) => (<p>{p}</p>))}
+        </>
+      ))}
+
+      <h2>Speicherdauer</h2>
+      <p>{retention}</p>
+
+      <h2>Deine Rechte</h2>
+      <p>Dir stehen nach der DSGVO folgende Rechte zu:</p>
+      <ul>
+        {rights.map((right) => (<li>{right}</li>))}
+      </ul>
+      <p>
+        Zum Wahrnehmen dieser Rechte schreib mir einfach eine{' '}
+        <MailtoLink subject="Datenschutz-Anfrage">E-Mail</MailtoLink>.
+      </p>
+
+      <h2>Beschwerderecht bei der Aufsichtsbehörde</h2>
+      <p>
+        Unabhängig davon hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde
+        zu beschweren. Die für mich zuständige Aufsichtsbehörde ist:<br />
+        <strong>
+          {supervisoryAuthority.map((line, i) => (
+            <Fragment>{i > 0 && <br />}{line}</Fragment>
+          ))}
+        </strong>
+      </p>
+    </Prose>
+  </Section>
+</Layout>

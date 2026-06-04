@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-const EMAIL = 'ralph@cib.is';
+const EMAIL = 'website@cib.is';
 
 // AC6 — obfuscated mailto absent from raw HTML yet works on interaction.
-// AC15 — footer wordmark + copyright + working mailto; no live legal links.
+// AC15 — footer wordmark + copyright + working mailto. NOTE: the original
+// "no live legal links" clause was superseded by Epic 4 (R7/T5), which ships
+// the live Impressum + Datenschutz links — now asserted here.
 test.describe('obfuscated mailto + footer', () => {
   test('raw served HTML contains neither the address nor a mailto: link (AC6)', async ({
     page,
@@ -23,7 +25,7 @@ test.describe('obfuscated mailto + footer', () => {
     await expect(cta).toHaveAttribute('href', '/angebot');
   });
 
-  test('footer shows wordmark, copyright, working mailto and no live legal links (AC15)', async ({
+  test('footer shows wordmark, copyright, working mailto and live legal links (AC15 + Epic 4 R7)', async ({
     page,
   }) => {
     await page.goto('/');
@@ -35,10 +37,10 @@ test.describe('obfuscated mailto + footer', () => {
     await mail.focus();
     await expect(mail).toHaveAttribute('href', new RegExp(`^mailto:${EMAIL}`));
 
-    // Impressum / Datenschutz are reserved placeholders, NOT live links yet.
-    await expect(footer.getByRole('link', { name: /Impressum/i })).toHaveCount(0);
-    await expect(footer.getByRole('link', { name: /Datenschutz/i })).toHaveCount(0);
-    await expect(footer.locator('[data-legal-slot="impressum"]')).toBeVisible();
-    await expect(footer.locator('[data-legal-slot="datenschutz"]')).toBeVisible();
+    // Epic 4 (R7/T5): Impressum / Datenschutz are now LIVE links, and the old
+    // reserved disabled slots are gone.
+    await expect(footer.locator('a[href="/impressum"]')).toHaveCount(1);
+    await expect(footer.locator('a[href="/datenschutz"]')).toHaveCount(1);
+    await expect(footer.locator('[data-legal-slot]')).toHaveCount(0);
   });
 });
