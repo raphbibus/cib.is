@@ -1,5 +1,5 @@
 ---
-import { buildMeta } from '@/lib/seo';
+import { buildMeta, type OgType } from '@/lib/seo';
 // Importing the font assets yields their hashed, same-origin build URLs so the
 // <link rel=preload> href matches the @font-face url() Vite emits (R2/A3).
 import anton from '@/assets/fonts/anton-400.woff2';
@@ -10,10 +10,11 @@ interface Props {
   description: string;
   path?: string;
   ogImage?: string;
+  ogType?: OgType;
 }
 
-const { title, description, path = Astro.url.pathname, ogImage } = Astro.props;
-const meta = buildMeta({ title, description, path, ogImage });
+const { title, description, path = Astro.url.pathname, ogImage, ogType } = Astro.props;
+const meta = buildMeta({ title, description, path, ogImage, ogType });
 ---
 
 <meta charset="utf-8" />
@@ -25,6 +26,9 @@ const meta = buildMeta({ title, description, path, ogImage });
 <!-- Indexing guard — removed only at Epic 4 go-public (mirrors X-Robots-Tag in netlify.toml). -->
 <meta name="robots" content={meta.robots} />
 <link rel="canonical" href={meta.canonical} />
+
+<!-- RSS feed autodiscovery (so readers/browsers find the blog feed). -->
+<link rel="alternate" type="application/rss+xml" title="cib.is — Blog" href="/rss.xml" />
 
 <!-- Open Graph -->
 <meta property="og:type" content={meta.ogType} />

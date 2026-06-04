@@ -1,0 +1,22 @@
+---
+// End-of-post CTA into the Offers funnel (R1/AC1). Personal / first-person
+// voice; reuses the Button primitive (ink-on-neon, visible focus ring). Copy
+// lives in the typed module src/content/blog-cta.ts — no hard-coded strings.
+import Button from '@/components/Button.astro';
+import { blogCta } from '@/content/blog-cta';
+---
+
+<aside
+  data-post-cta
+  class="mt-16 border-t-[3px] border-line pt-10"
+  aria-label="Angebot"
+>
+  <p class="mb-4 inline-block border-[3px] border-neon-green px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-neon-green">
+    {blogCta.kicker}
+  </p>
+  <h2 class="max-w-3xl text-[clamp(1.75rem,4vw,3rem)]">{blogCta.headline}</h2>
+  <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{blogCta.body}</p>
+  <div class="mt-8">
+    <Button href={blogCta.href} variant="solid" size="lg">{blogCta.buttonLabel} →</Button>
+  </div>
+</aside>

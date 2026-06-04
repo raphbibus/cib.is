@@ -25,3 +25,6 @@ dist/
 specs/**/infos-ralph/
 specs/*.pdf
 specs/**/*.pdf
+
+# Private editorial notes from the blog migration — never commit (R14/AC8)
+editorial-notes.md

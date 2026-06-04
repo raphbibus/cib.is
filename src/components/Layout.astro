@@ -3,21 +3,23 @@ import BaseHead from './BaseHead.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import { MAILTO_KEY } from '@/lib/mailto';
+import type { OgType } from '@/lib/seo';
 import '@/styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  ogType?: OgType;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, ogType } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="de">
   <head>
-    <BaseHead title={title} description={description} ogImage={ogImage} />
+    <BaseHead title={title} description={description} ogImage={ogImage} ogType={ogType} />
   </head>
   <body class="min-h-screen bg-ink text-paper font-body antialiased overflow-x-hidden">
     <a

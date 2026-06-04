@@ -1,9 +1,13 @@
 ---
 // Header (R16/AC14): wordmark + minimal nav + a merch-style "Buchen" button.
-// The button sits OUTSIDE <nav>. The wordmark and "Story" both lead back to the
-// start page (Story to its section there); "Buchen" leads into the offers
-// funnel. Header is global, so links are absolute routes, not in-page anchors.
-const navLinks = [{ label: 'Story', href: '/#story' }];
+// The button sits OUTSIDE <nav>. The wordmark and "Story" lead back to the
+// start page (Story to its section there); "Blog" opens the blog index;
+// "Buchen" leads into the offers funnel. Header is global, so links are
+// absolute routes, not in-page anchors.
+const navLinks = [
+  { label: 'Story', href: '/#story' },
+  { label: 'Blog', href: '/blog' },
+];
 ---
 
 <header class="sticky top-0 z-50 border-b-[3px] border-paper bg-ink/90 backdrop-blur">

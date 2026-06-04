@@ -1,0 +1,42 @@
+---
+import Layout from '@/components/Layout.astro';
+import Section from '@/components/Section.astro';
+import PostCard from '@/components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { firstParagraph } from '@/lib/excerpt';
+
+// /blog — flat, newest-first index (R7/R8/R11/R12/AC5). No search, no tags, no
+// images. Each card links to /blog/<slug> and shows the first-paragraph excerpt
+// (R10/AC7). Sorted by the loader-derived date, descending.
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout
+  title="Blog — Ralph Cibis"
+  description="Texte über Leadership, Organisationsentwicklung und agiles Arbeiten – ohne Buzzword-Bingo, von Ralph Cibis."
+>
+  <Section id="blog" kicker="Blog" title="Gedanken zu Führung, Organisation & agilem Arbeiten">
+    {/* RSS feed entry point — otherwise the feed at /rss.xml is undiscoverable. */}
+    <a
+      href="/rss.xml"
+      class="inline-flex items-center gap-2 border-[3px] border-paper px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-paper no-underline transition-transform duration-100 hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+    >
+      <span aria-hidden="true">»</span> RSS-Feed
+    </a>
+    <div class="mt-6">
+      {
+        posts.map((post) => (
+          <PostCard
+            slug={post.id}
+            title={post.data.title}
+            date={post.data.date}
+            excerpt={firstParagraph(post.body ?? '')}
+            coauthor={post.data.coauthor}
+          />
+        ))
+      }
+    </div>
+  </Section>
+</Layout>

@@ -9,11 +9,15 @@ export const SITE_URL = 'https://ralphcibis.netlify.app';
 export const SITE_NAME = 'cib.is';
 export const DEFAULT_OG_IMAGE = '/og-default.png';
 
+export type OgType = 'website' | 'article';
+
 export interface MetaInput {
   title: string;
   description: string;
   path: string;
   ogImage?: string;
+  /** Blog posts pass 'article'; defaults to 'website' for site pages (R15). */
+  ogType?: OgType;
 }
 
 export interface Meta {
@@ -23,7 +27,7 @@ export interface Meta {
   canonical: string;
   ogUrl: string;
   ogImage: string;
-  ogType: 'website';
+  ogType: OgType;
   siteName: string;
 }
 
@@ -31,7 +35,7 @@ function absolute(pathOrUrl: string): string {
   return new URL(pathOrUrl, SITE_URL).href;
 }
 
-export function buildMeta({ title, description, path, ogImage }: MetaInput): Meta {
+export function buildMeta({ title, description, path, ogImage, ogType }: MetaInput): Meta {
   const canonical = absolute(path);
   return {
     title,
@@ -40,7 +44,7 @@ export function buildMeta({ title, description, path, ogImage }: MetaInput): Met
     canonical,
     ogUrl: canonical,
     ogImage: absolute(ogImage ?? DEFAULT_OG_IMAGE),
-    ogType: 'website',
+    ogType: ogType ?? 'website',
     siteName: SITE_NAME,
   };
 }

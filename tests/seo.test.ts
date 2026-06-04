@@ -31,4 +31,21 @@ describe('lib/seo buildMeta', () => {
     });
     expect(meta.ogImage).toBe('https://ralphcibis.netlify.app/custom.png');
   });
+
+  // T5a / R15 — blog posts opt into og:type=article; default stays 'website'.
+  it('defaults ogType to website when not given', () => {
+    const meta = buildMeta({ title: 'X', description: 'Y', path: '/' });
+    expect(meta.ogType).toBe('website');
+  });
+
+  it('accepts ogType=article for blog posts (R15) and keeps the noindex guard', () => {
+    const meta = buildMeta({
+      title: 'Post',
+      description: 'Excerpt',
+      path: '/blog/post',
+      ogType: 'article',
+    });
+    expect(meta.ogType).toBe('article');
+    expect(meta.robots).toBe('noindex,nofollow');
+  });
 });

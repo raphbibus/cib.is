@@ -14,6 +14,7 @@
     "lighthouse": "lighthouse http://localhost:4321/ --only-categories=performance,accessibility,best-practices,seo --chrome-flags=\"--headless=new\" --view"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.18",
     "astro": "^5.7.0"
   },
   "devDependencies": {

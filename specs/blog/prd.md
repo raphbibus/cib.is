@@ -1,74 +1,98 @@
 # Epic PRD — Blog (flatfile, agile-punk)
 
-> **Status:** Drafting · **Confidence:** 30% · **Brainstorm runs:** 1
+> **Status:** ✅ Ready to build · **Confidence:** 93% · **Brainstorm runs:** 4
 > **Source:** [Roadmap](../roadmap.md)
 
 ## 1. Context
 
 A repo-managed writing space for Ralph's agile-punk & organizational philosophy,
 living inside the cib.is portfolio/consulting site. The site is a soft sales funnel
-(landing → offers → request a 490 € Friday); the blog's job is to support that funnel —
-but *how* it supports it (convert warm visitors vs. attract cold ones vs. signal
-credibility) is the central unresolved strategic question (see Q1), and it shapes nearly
-every downstream decision.
+(landing → offers → request a 490 € Friday); the blog's job is **conversion-first**:
+deepen trust for visitors already on-site and push them toward the Offers page, while
+keeping the door open to switch on SEO/attract later (after Epic 4 removes `noindex`).
 
 **Locked from roadmap:** Astro static (`output: 'static'`, zero-JS default), Tailwind 4,
 self-hosted fonts, German only, no tracking/cookies/third-party scripts (so no cookie
 banner), Netlify free tier, `noindex` until Epic 4 ships legal pages.
 
-**Roadmap scope (seed):** Astro Content Collection for posts (Markdown/MDX, frontmatter:
-title/date/tags/excerpt/optional cover); blog index (newest-first, tags) + post detail
-template; optimized images via `astro:assets` + embeddable video (privacy-respecting);
-RSS feed; per-post SEO/OG; reading-friendly punk typography; migrate Ralph's existing
-posts; `/docs/content-authoring.md` documenting the format & media workflow.
+**Content source:** `blog-old-agile-punks/` — Markdown files from the old multi-author
+"agile punk" blog. The 19 files whose name contains `ralph` are migrated (18 solo + the
+co-authored `2020-07-30-domiralph.md`); files by other authors only (domi, max, chereen)
+are discarded. Old posts have an `# H1` title, no YAML frontmatter, the publish date in
+the `YYYY-MM-DD` filename prefix, and inline image links (`![...](../img/blog/*.webp
+"caption")`) that are removed entirely. No tags at launch; the index is a flat
+newest-first list.
 
-**Browser-verifiable (target):** Index lists posts; a post renders with an embedded image
-and video; tags filter; RSS validates; adding a Markdown file produces a new post on rebuild.
+**Browser-verifiable (target):** Index lists posts newest-first; a post renders cleanly
+(no images/cover); RSS validates; adding a Markdown file produces a new post on rebuild.
+*(Video and tag-filtering, named in the roadmap, are deferred — see R4, R11.)*
 
 ## 2. Requirements
 
-<!-- Empty until decisions are reconciled. -->
+- **R1** — Every post detail page ends with a post→offer CTA block; the copy is **personal / first-person** (Ralph as a person, not a company/"Laden") and links to the Offers page.
+- **R2** — Conversion-first: no SEO-volume features (keyword pages, related-post engines) at launch, but post URLs are clean/semantic and each post carries SEO/OG meta so attract-mode SEO can be enabled later without rework.
+- **R3** — Posts are authored as CommonMark `.md` files in an Astro Content Collection (no MDX); the collection schema validates Markdown posts.
+- **R4** — Launch supports optimized images via `astro:assets` only; video embedding is **out of scope** (defers the roadmap's "embedded video" target).
+- **R5** — Migrate the 19 posts whose filename contains `ralph` from `blog-old-agile-punks/` (18 solo + the co-authored `2020-07-30-domiralph.md`); posts authored solely by others (domi, max, chereen) are discarded and never appear on the site.
+- **R6** — During migration, all inline image references (`![...](../img/blog/*)`) are removed from post bodies.
+- **R7** — The blog index lists posts newest-first, ordered by publish date from the `YYYY-MM-DD` filename-prefix convention.
+- **R8** — No full-text / client-side search at launch.
+- **R9** — Solo posts show no author byline; the co-authored `2020-07-30-domiralph.md` is published with a "mit Domi" authorship note.
+- **R10** — Frontmatter schema = `title` (lifted from the post's `# H1`, which is then removed from the body to avoid duplicate rendering) + `date` (parsed from the filename prefix). The excerpt is auto-derived from the first paragraph at build time. No `tags` field.
+- **R11** — No tag taxonomy or tag filtering at launch; the index is a single flat newest-first list.
+- **R12** — No cover/hero images: with all images stripped, neither post detail nor index displays a cover image.
+- **R13** — Editorial pass: apply only **safe mechanical fixes** directly to migrated posts (remove/repair references to discarded authors and their posts, fix dead links); leave all voice/judgment calls untouched in the posts and flag them in `editorial-notes.md` for Ralph.
+- **R14** — All editorial changes/recommendations are written to a notes file at the repo root (`editorial-notes.md`) that is **gitignored**, for Ralph's review.
+- **R15** — Each post emits per-post SEO/OG meta (title + description derived from the excerpt). *[roadmap-locked]*
+- **R16** — The site generates a valid RSS feed of published posts, with **full post content** in each item. *[roadmap-locked]*
+- **R17** — `/docs/content-authoring.md` documents the post format: frontmatter schema, filename date convention, image policy, and CTA convention. *[roadmap-locked]*
+- **R18** — Each post is served at a clean, title-derived kebab-case slug under `/blog/<slug>` (slug auto-generated by slugifying the title); the index lives at `/blog`.
 
 ## 3. Acceptance Criteria
 
-<!-- Empty until decisions are reconciled. -->
+- **AC1** (R1) — Each post detail page renders a personal, first-person CTA block at the end linking to the Offers page; clicking it navigates there.
+- **AC2** (R3) — Adding a valid `.md` post file and rebuilding produces a new published post on the index (no `.mdx` required).
+- **AC3** (R4) — A post renders an optimized image via `astro:assets` *(once any post has one)*; no video player/component is present anywhere in the blog.
+- **AC4** (R5, R9) — All 19 `ralph` posts appear on the index; the co-authored post shows "mit Domi"; no domi/max/chereen-only posts appear.
+- **AC5** (R7) — The index orders posts newest-first by filename date; the topmost post is the most recent.
+- **AC6** (R6, R12) — Migrated posts contain no image markup, and no cover/hero image appears anywhere in the blog.
+- **AC7** (R10) — Each post's title is rendered from frontmatter (no duplicate H1 in the body); the index shows the post's first paragraph as its excerpt.
+- **AC8** (R14) — An `editorial-notes.md` exists at the repo root listing the editorial changes and is excluded by `.gitignore` (not tracked by git).
+- **AC9** (R16) — The RSS feed validates and each item carries the full post content.
+- **AC10** (R18) — Each post is reachable at `/blog/<title-slug>` and the index at `/blog` links to it.
 
-## 4. Open Questions
+## 4. Ready to Build
 
-> How to answer: change `[ ]` to `[x]` on **one** option per question, or fill its `Other:` line.
-> Don't delete a question — it moves to "Resolved Decisions" automatically on the next run.
-> The `**(recommended)**` label is a suggestion only; nothing is pre-selected.
+All blocking questions are resolved. The 18+1 posts, content model, migration rules,
+URLs, RSS, and CTA are fully specified by **R1–R18 / AC1–AC10**. A builder can implement
+without guessing. Start from the Requirements; verify against the Acceptance Criteria.
 
-### Q1: What is the blog's primary job in the funnel?
-This decision drives content strategy, post count, taxonomy, SEO emphasis, and CTAs.
-- [ ] **Convert** — deepen trust for visitors already on-site; few deep evergreen essays; strong post→offer CTA — focuses effort where intent is highest, fits a part-time consultant who can't feed a content mill
-- [ ] **Attract** — pull cold strangers via SEO/shareability; more posts, keyword-shaped; volume game — biggest reach but demands sustained output and conflicts with `noindex`-until-Epic-4
-- [ ] **Ballast** — exist to signal "real practitioner"; quality over cadence, no growth pressure — lowest effort, but then the epic is mostly cosmetic
-- [ ] **Convert-first, attract-later** — build for conversion now (deep posts + CTA), keep the door open for SEO once legal pages ship and indexing is on **(recommended)** — matches funnel-first roadmap order and the realistic cadence of one person; doesn't over-build for traffic that isn't there yet
-- [ ] Other: 
+> Re-reading reminder (per roadmap): before implementing, read `/docs/architecture.md`
+> and `/docs/coding-guidelines.md`. Honor the cross-cutting principles — Lighthouse ≥ 95,
+> WCAG AA, semantic/keyboard-navigable HTML, zero render-blocking third-party requests,
+> and keep the site `noindex` (public indexing waits for Epic 4).
 
-### Q2: Authoring format — Markdown or MDX?
-- [ ] **Markdown (`.md`) only** — simplest authoring, no JSX, fewest moving parts — keeps content portable and the build dumb; aligns with zero-JS default
-- [ ] **MDX (`.mdx`)** — allows embedded components (callouts, custom video embed, CTA blocks) inside posts — more expressive, but pulls JS/components into content and risks scope creep **(recommended)** — the roadmap already names MDX, and a punk blog likely wants pull-quotes / CTA blocks / a privacy video component inline; Astro ships zero JS unless a component needs it, so the zero-JS budget holds
-- [ ] Other: 
-
-### Q3: How are videos embedded, given the no-tracking / no-third-party-scripts rule?
-- [ ] **Self-hosted `<video>`** — MP4/WebM in the repo or on Netlify, native HTML player — zero third parties, full control, but bloats the repo and eats Netlify bandwidth
-- [ ] **Privacy embed (e.g. YouTube `nocookie`, or click-to-load facade)** — offload hosting/bandwidth — saves repo size, but `youtube-nocookie` still hits a third party on play; a click-to-load facade keeps the initial page clean **(recommended)** — a click-to-load facade (poster image → loads embed only on click) honors "no third-party scripts on load," keeps the cookie-banner-free promise, and avoids hosting heavy video
-- [ ] **Defer video entirely** — ship image support now, add video when a post actually needs it — avoids solving a problem with no current content
-- [ ] Other: 
-
-### Q4: How much existing content seeds the launch, and is there any to migrate?
-- [ ] **Migrate existing posts** — Ralph has posts elsewhere to import — need source + count to scope migration effort
-- [ ] **Write 2–3 new flagship posts** — start clean with conversion-grade essays — best if the job is Convert (Q1); small, high-quality set **(recommended)** — a funnel blog needs depth not breadth at launch; 2–3 strong posts prove the template and give the GF something to read
-- [ ] **Ship empty with one placeholder/"hello" post** — infrastructure now, content later — fastest to "done," but an empty blog can hurt more than help
-- [ ] Other: 
-
-### Q5: Does the blog need full-text search or filtering beyond tags at launch?
-- [ ] **Tags only (filter by tag), no search** — newest-first index + tag pages — zero-JS friendly, trivial to build, enough for a small post set **(recommended)** — with a handful of posts, search is over-engineering; tags already cover discovery
-- [ ] **Client-side search (e.g. Pagefind)** — static-friendly full-text search — nice at scale, but adds JS + build step for a blog that may have <10 posts
-- [ ] Other: 
+### Deferred (non-blocking — revisit post-launch)
+- **Tags / taxonomy** — add per-post tags + tag filtering once post volume justifies discovery (R11).
+- **Video embedding** — add a privacy-respecting click-to-load video component when a post needs it (R4).
+- **SEO / attract mode** — keyword pages, related-posts, sitemap emphasis; switch on after Epic 4 removes `noindex` (R2).
+- **Editorial judgment calls** — Ralph works through the flagged items in `editorial-notes.md` on his own schedule (R13/R14).
 
 ## 5. Resolved Decisions
 
-<!-- | D# | Question | Chosen | Produced | -->
+| D# | Question | Chosen | Produced |
+|----|----------|--------|----------|
+| D1 | Q1 Blog's job in the funnel | Convert-first, attract-later | R1, R2, AC1 |
+| D2 | Q2 Authoring format | Markdown (`.md`) only | R3, AC2 |
+| D3 | Q3 Video embedding | Defer video entirely | R4, AC3 |
+| D4 | Q4 Launch content | Migrate `ralph` posts, strip images, discard others | R5, R6, AC4 |
+| D5 | Q5 Search / ordering | No search; newest-first by filename date | R7, R8, AC5 |
+| D6 | Q6 Co-authored post | Include `domiralph` with "mit Domi" note | R5, R9, AC4 |
+| D7 | Q7 Frontmatter schema | Minimal: title (from H1) + date; excerpt auto; no tags | R10, R11, AC7 |
+| D8 | Q8 Image removal | Strip whole image line incl. caption; no covers | R6, R12, AC6 |
+| D9 | Q9 Editorial pass | Light pass + gitignored `editorial-notes.md` for review | R13, R14, AC8 |
+| D10 | Q10 Post→offer CTA | End-of-post block, personal/first-person voice | R1, AC1 |
+| D11 | Q11 Editorial pass | Mechanical fixes applied; judgment calls flagged in notes | R13 |
+| D12 | Q12 URL / slug | Title-derived kebab-case slug at `/blog/<slug>` | R18, AC10 |
+| D13 | Q13 RSS feed | Full post content in each item | R16, AC9 |
+| D14 | Q14 Author byline | Byline only on the collab ("mit Domi"); solo posts none | R9, AC4 |
