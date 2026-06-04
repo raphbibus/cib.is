@@ -1,0 +1,44 @@
+---
+import { buildMeta } from '@/lib/seo';
+// Importing the font assets yields their hashed, same-origin build URLs so the
+// <link rel=preload> href matches the @font-face url() Vite emits (R2/A3).
+import anton from '@/assets/fonts/anton-400.woff2';
+import inter400 from '@/assets/fonts/inter-400.woff2';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  ogImage?: string;
+}
+
+const { title, description, path = Astro.url.pathname, ogImage } = Astro.props;
+const meta = buildMeta({ title, description, path, ogImage });
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<!-- Indexing guard — removed only at Epic 4 go-public (mirrors X-Robots-Tag in netlify.toml). -->
+<meta name="robots" content={meta.robots} />
+<link rel="canonical" href={meta.canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={meta.ogType} />
+<meta property="og:site_name" content={meta.siteName} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+<meta property="og:url" content={meta.ogUrl} />
+<meta property="og:image" content={meta.ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon (swap public/favicon.svg to rebrand) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate icon" href="/favicon.ico" sizes="any" />
+
+<!-- Preload only the two above-the-fold faces to protect LCP (A3). -->
+<link rel="preload" as="font" type="font/woff2" href={anton} crossorigin />
+<link rel="preload" as="font" type="font/woff2" href={inter400} crossorigin />

@@ -1,0 +1,35 @@
+---
+// First-viewport manifesto hook (R6/R7/A4) — tour-poster treatment.
+interface Props {
+  kicker: string;
+  headline: string;
+  lead: string;
+}
+
+const { kicker, headline, lead } = Astro.props;
+const headlineLines = headline.split('\n');
+---
+
+<section
+  id="hero"
+  class="relative overflow-hidden border-b-[6px] border-paper bg-ink"
+>
+  <div class="mx-auto w-full max-w-6xl px-5 pb-20 pt-16 sm:pt-24">
+    <div class="mb-7 flex items-center gap-3">
+      <span class="eq" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </span>
+      <p class="font-mono text-xs font-medium uppercase tracking-[0.25em] text-gradient sm:text-sm">
+        {kicker}
+      </p>
+    </div>
+
+    <h1 class="text-[clamp(2.5rem,9vw,6.25rem)] tracking-tight">
+      {headlineLines.map((line) => <span class="block">{line}</span>)}
+    </h1>
+
+    <p class="mt-9 max-w-2xl border-l-[3px] border-neon-green pl-5 text-lg leading-relaxed text-muted sm:text-xl">
+      {lead}
+    </p>
+  </div>
+</section>

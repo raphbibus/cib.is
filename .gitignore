@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# env / local
+.env
+.env.*
+!.env.example
+
+# Playwright artifacts (intentional QA screenshots in e2e/screenshots/ ARE tracked)
+/test-results/
+/playwright-report/
+/e2e/.test-results/
+/blob-report/
+/playwright/.cache/
+
+# OS / editor
+.DS_Store
+.idea/
+
+# Personal / sensitive source material — keep on disk for refinement, never commit
+specs/**/infos-ralph/
+specs/*.pdf
+specs/**/*.pdf

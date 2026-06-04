@@ -1,0 +1,21 @@
+# Netlify config for cib.is (static Astro). See docs/deployment.md.
+# Continuous deploy: every push to `main` builds and deploys to ralphcibis.netlify.app.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Indexing guard (defence-in-depth with the <meta robots> in Layout).
+# Until Epic 4 ships Impressum + Datenschutz, keep the site out of search
+# indexes. SINGLE REMOVAL POINT for go-public: drop this header AND the
+# <meta name="robots"> in src/components/BaseHead.astro.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Long-cache the hashed, immutable build assets (fonts, images, css).
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

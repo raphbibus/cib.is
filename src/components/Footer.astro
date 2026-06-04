@@ -1,0 +1,45 @@
+---
+import MailtoLink from './MailtoLink.astro';
+
+// Footer (R17/AC15): wordmark + copyright + working obfuscated mailto.
+// Reserved Impressum/Datenschutz slots exist as disabled placeholders — NO
+// live legal links yet (those arrive in Epic 4).
+const year = new Date().getFullYear();
+const legalSlots = ['Impressum', 'Datenschutz'];
+---
+
+<footer class="border-t-[6px] border-paper bg-ink text-paper">
+  <div class="mx-auto w-full max-w-6xl px-5 py-12">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <p class="font-mono text-xs uppercase leading-relaxed tracking-[0.18em] text-muted">
+        © {year} Ralph Cibis · Organisations-Punk<br />
+        Zuhause in der Metropolregion Nürnberg · deutschlandweit im Einsatz
+      </p>
+
+      <nav aria-label="Footer" class="flex flex-col gap-3 sm:items-end">
+        <MailtoLink
+          class="font-mono text-sm font-medium uppercase tracking-[0.15em] text-paper underline underline-offset-4 hover:text-neon-green"
+        >
+          E-Mail schreiben
+        </MailtoLink>
+        <ul class="flex gap-5">
+          {
+            legalSlots.map((label) => (
+              <li>
+                {/* Reserved for Epic 4 — rendered disabled, not a live link (AC15). */}
+                <span
+                  class="cursor-not-allowed font-mono text-xs uppercase tracking-[0.15em] text-muted/50"
+                  data-legal-slot={label.toLowerCase()}
+                  aria-disabled="true"
+                  title="Folgt in Kürze"
+                >
+                  {label}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

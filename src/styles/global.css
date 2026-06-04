@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Self-hosted fonts (R2/R15, A3) — latin-subset woff2, same-origin only.
+ *   Anton        → poster/display headlines (band-merch aesthetic)
+ *   IBM Plex Mono → labels, passes, meta (ticket-stub voice)
+ *   Inter        → body
+ * ------------------------------------------------------------------ */
+@font-face {
+  font-family: "Anton";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/anton-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/ibm-plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/ibm-plex-mono-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/inter-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/inter-600.woff2") format("woff2");
+}
+
+/* ------------------------------------------------------------------ *
+ * Brand design tokens — dark-first / band-merch (R4, A2)
+ * bone-on-black 17.45:1 · neon-green-on-black 14.5:1 · neon-pink-on-black 5.7:1
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #0a0a0a;        /* page background (near-black stage) */
+  --color-paper: #f4f1ea;      /* primary text (bone) */
+  --color-surface: #151515;    /* raised panels / tracklist rows */
+  --color-line: #2b2b2b;       /* hairline borders on black (non-text) */
+  --color-ghost: #636363;      /* dim "tracklist" numerals — 3.3:1, AA large text */
+  --color-muted: #b7b2a8;      /* secondary text — 9.3:1 on ink */
+
+  --color-neon-pink: #ff2d95;
+  --color-neon-green: #39ff14;
+  --gradient-accent: linear-gradient(115deg, var(--color-neon-pink) 10%, var(--color-neon-green) 90%);
+
+  --font-display: "Anton", "Arial Narrow", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  --spacing-section: 7rem;
+  --radius-none: 0px;
+
+  --border-hair: 1px;
+  --border-raw: 3px;
+  --border-slab: 6px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Base layer — dark stage defaults
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Anton poster headings — uppercase, tight, loud. line-height 1.0 keeps the
+     poster feel while giving capital umlauts (Ä/Ö/Ü) room so they don't clip
+     into the line above on wrapped headings. */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0.005em;
+  }
+
+  /* Faint film grain over the whole stage (decorative, non-interactive). */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: var(--border-raw) solid var(--color-neon-pink);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities — neon, marquee, equalizer, ticket perforation
+ * ------------------------------------------------------------------ */
+@layer utilities {
+  .text-gradient {
+    background-image: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-gradient-accent { background-image: var(--gradient-accent); }
+
+  /* Animated equalizer bars (music identity). */
+  .eq { display: inline-flex; align-items: flex-end; gap: 3px; height: 1.4rem; }
+  .eq > span {
+    width: 4px;
+    background-image: var(--gradient-accent);
+    animation: eq 0.9s ease-in-out infinite alternate;
+  }
+  .eq > span:nth-child(1) { animation-delay: 0s; height: 40%; }
+  .eq > span:nth-child(2) { animation-delay: 0.2s; height: 80%; }
+  .eq > span:nth-child(3) { animation-delay: 0.4s; height: 55%; }
+  .eq > span:nth-child(4) { animation-delay: 0.1s; height: 95%; }
+  .eq > span:nth-child(5) { animation-delay: 0.3s; height: 65%; }
+  @keyframes eq {
+    from { transform: scaleY(0.35); }
+    to { transform: scaleY(1); }
+  }
+
+  /* Animated gradient underline for nav / inline links. */
+  .nav-underline { position: relative; }
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    height: 3px; width: 100%;
+    background-image: var(--gradient-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.15s ease;
+  }
+  .nav-underline:hover::after,
+  .nav-underline:focus-visible::after { transform: scaleX(1); }
+
+  /* Ticket / backstage-pass perforation edge. */
+  .perforation {
+    background-image: radial-gradient(circle, var(--color-ink) 0 5px, transparent 5px);
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: repeat-x;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eq > span { animation: none; }
+    .nav-underline::after { transition: none; }
+  }
+}
