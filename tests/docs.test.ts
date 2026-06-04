@@ -28,4 +28,16 @@ describe('docs deliverables', () => {
     expect(md).toMatch(/perf|lighthouse|budget/);
     expect(md).toMatch(/content|copy|authoring/);
   });
+
+  // T12 / R17 — the blog post-authoring guide documents the format authors need.
+  it('docs/content-authoring.md exists and covers frontmatter, filename/date, images, CTA', () => {
+    const f = fileURLToPath(new URL('../docs/content-authoring.md', import.meta.url));
+    expect(existsSync(f)).toBe(true);
+    const md = read('content-authoring.md');
+    expect(md).toMatch(/frontmatter|coauthor/);
+    expect(md).toMatch(/filename|yyyy-mm-dd|date/);
+    expect(md).toMatch(/image|astro:assets/);
+    expect(md).toMatch(/cta|angebot/);
+    expect(md).toMatch(/slug|h1|title/);
+  });
 });

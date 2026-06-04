@@ -10,11 +10,10 @@ test.describe('header nav + story-first arc', () => {
     // wordmark links home
     await expect(header.getByRole('link', { name: /cib.*is/i })).toHaveAttribute('href', '/');
 
-    // Epic 2: the nav is a single "Story" link that leads back to the start page.
-    const navLinks = header.locator('nav a');
-    await expect(navLinks).toHaveCount(1);
-    await expect(navLinks.first()).toHaveAttribute('href', '/#story');
-    // its target exists on the home page
+    // Nav: a "Story" link back to the start page + a "Blog" link (Epic 3).
+    await expect(header.getByRole('link', { name: 'Story' })).toHaveAttribute('href', '/#story');
+    await expect(header.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog');
+    // the Story target exists on the home page
     await expect(page.locator('#story')).toHaveCount(1);
   });
 

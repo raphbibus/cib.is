@@ -8,7 +8,15 @@ const { class: cls = '' } = Astro.props;
 ---
 
 <div
-  class={`max-w-2xl text-lg leading-relaxed text-muted [&_a]:text-neon-green [&_a]:underline [&_a]:underline-offset-4 [&_p+p]:mt-5 [&_strong]:font-semibold [&_strong]:text-paper ${cls}`}
+  class={`max-w-2xl text-lg leading-relaxed text-muted
+    [&_a]:text-neon-green [&_a]:underline [&_a]:underline-offset-4
+    [&_p+p]:mt-5 [&_strong]:font-semibold [&_strong]:text-paper
+    [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:text-paper [&_h2]:text-2xl [&_h2]:leading-tight sm:[&_h2]:text-3xl
+    [&_h3]:mt-10 [&_h3]:mb-3 [&_h3]:text-paper [&_h3]:text-xl [&_h3]:leading-tight sm:[&_h3]:text-2xl
+    [&_h4]:mt-8 [&_h4]:mb-2 [&_h4]:text-paper
+    [&_ul]:mt-5 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-2
+    [&_blockquote]:mt-5 [&_blockquote]:border-l-[3px] [&_blockquote]:border-line [&_blockquote]:pl-4 [&_blockquote]:italic
+    ${cls}`}
 >
   <slot />
 </div>
