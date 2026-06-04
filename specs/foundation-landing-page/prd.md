@@ -1,7 +1,14 @@
 # Epic PRD — Foundation & Landing Page
 
-> **Status:** Ready · **Confidence:** 90% · **Brainstorm runs:** 3
+> **Status:** Built · **Confidence:** 90% · **Brainstorm runs:** 3
 > **Source:** [Roadmap](../roadmap.md)
+>
+> **Design update (as-built, user-approved):** the visual direction was reiterated after the initial
+> build from a light "industrial/brutalist" look to a **dark band/merch tour-poster** aesthetic
+> (near-black stage, neon pink→green accent, music identity: equalizer, CV "tracklist",
+> "backstage-pass" CTA), and the display typeface moved from Space Grotesk to **Anton**. See the tech
+> spec's **§9 Resolved Tech Decisions (TD6–TD10)**. Requirement/AC *substance* below is unchanged;
+> the font names in R15/AC13 and the SEO note in AC11 have been synced to the as-built state.
 
 ## 1. Context
 
@@ -64,8 +71,8 @@ semantic HTML, keyboard-navigable, visible focus, WCAG AA contrast.
 - **R14** — German landing copy is **drafted by Claude** from the CV (`specs/2026-cv-de-ralph.pdf`)
   and the testimonials/certs in `specs/foundation-landing-page/infos-ralph/`; **Ralph reviews/edits**
   before go-public. Copy is German, in the punk-but-credible voice.
-- **R15** — Typefaces: **Space Grotesk** (display), **IBM Plex Mono** (accents/labels), **Inter** or
-  a system stack (body) — all self-hosted `woff2` (satisfies R2).
+- **R15** — Typefaces: **Anton** (display; superseded Space Grotesk per TD8), **IBM Plex Mono**
+  (accents/labels), **Inter** (body) — all self-hosted `woff2` (satisfies R2).
 - **R16** — Header nav = **wordmark + minimal in-page anchor links** („Story", „Kontakt") that scroll
   within the single page; no links to unbuilt routes.
 - **R17** — Footer = wordmark + copyright + obfuscated contact `mailto:`, with **reserved placeholder
@@ -93,12 +100,15 @@ semantic HTML, keyboard-navigable, visible focus, WCAG AA contrast.
   description + OG tags and a favicon.
 - **AC9** (R11) — Every served page's `<head>` contains `noindex,nofollow`.
 - **AC10** (R12) — Site is reachable at **`ralphcibis.netlify.app`** and updates on push to `main`.
-- **AC11** (R13) — Lighthouse ≥ 95 across Performance/Accessibility/Best-Practices/SEO; every
-  interactive element is keyboard-reachable with a visible focus state.
+- **AC11** (R13) — Lighthouse ≥ 95 across Performance/Accessibility/Best-Practices; every
+  interactive element is keyboard-reachable with a visible focus state. **SEO note:** the SEO
+  category reports ~66 *by design* this epic — the only failing audit is `is-crawlable`, caused by
+  the intentional `noindex` (R11/AC9); excluding it, SEO is 100, and it returns to ≥ 95 at Epic 4
+  go-public. Met when Perf/Accessibility/Best-Practices ≥ 95 and SEO's sole deduction is the noindex.
 - **AC12** (R14) — Shipped story/experience sections show **German copy** whose claims trace to the
   CV + `infos-ralph/` sources; no lorem-ipsum in those sections.
-- **AC13** (R15) — Space Grotesk, IBM Plex Mono, and the body face all load as same-origin `woff2`
-  (verifiable in the network tab; extends AC1).
+- **AC13** (R15) — Anton (display), IBM Plex Mono, and the body face (Inter) all load as same-origin
+  `woff2` (verifiable in the network tab; extends AC1).
 - **AC14** (R16) — Header shows wordmark + anchor links that scroll to their matching in-page
   sections; no 404 / dead links.
 - **AC15** (R17) — Footer shows wordmark, copyright, and a working obfuscated `mailto:`; no live
@@ -126,11 +136,11 @@ semantic HTML, keyboard-navigable, visible focus, WCAG AA contrast.
 | D1 | Q1 Positioning strategy | Punk as bait, credibility as the close (CV = `specs/2026-cv-de-ralph.pdf`) | R7, AC5 |
 | D2 | Q2 Narrative arc | Story-first (manifesto → experience → CTA) | R6, AC5 |
 | D3 | Q3 CTA behavior | Obfuscated `mailto:`, repointed to funnel in Epic 2 | R8, AC6 |
-| D4 | Q4 Visual identity | Industrial/brutalist; placeholder images from `placeholders/` | R4, R9, AC4, AC7 |
+| D4 | Q4 Visual identity | Brutalist base, executed as a **dark band/merch tour-poster** (TD6–TD9); placeholder images from `placeholders/` | R4, R9, AC4, AC7 |
 | D5 | Q5 Design-system scope | Fuller component library up front | R5, AC4 |
 | D6 | Q6 noindex mechanism | Global `noindex,nofollow` meta in Layout; remove in Epic 4 | R11, AC9 |
 | D7 | Q7 Copy source | Claude drafts German copy from CV + `infos-ralph/`; Ralph edits | R14, AC12 |
-| D8 | Q8 Typefaces | Space Grotesk + IBM Plex Mono + Inter/system, self-hosted | R15, AC13 |
+| D8 | Q8 Typefaces | Anton (display, ex-Space Grotesk per TD8) + IBM Plex Mono + Inter, self-hosted | R15, AC13 |
 | D9 | Q9 Header nav | Wordmark + in-page anchor links („Story", „Kontakt") | R16, AC14 |
 | D10 | Q10 Footer | Wordmark + copyright + obfuscated mailto; reserved legal slots | R17, AC15 |
 | D11 | Q11 Domain handling | Deploy to `ralphcibis.netlify.app` via push-to-main; cib.is deferred to Epic 4 (DNS pending) | R12, AC10 |

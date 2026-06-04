@@ -1,0 +1,148 @@
+---
+import Layout from '@/components/Layout.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Card from '@/components/Card.astro';
+import Prose from '@/components/Prose.astro';
+import MailtoLink from '@/components/MailtoLink.astro';
+import { Image } from 'astro:assets';
+import portrait from '@/assets/img/IMG_0514.webp';
+import shot2 from '@/assets/img/IMG_0073.webp';
+import shot3 from '@/assets/img/IMG_0658.webp';
+import shot4 from '@/assets/img/IMG_2487.webp';
+import { landing } from '@/content/landing';
+
+// Extra promo shots shown only on larger screens (md+); mobile keeps the one
+// hero image. Swap any file in src/assets/img/ — the frames keep their ratio.
+const gallery = [
+  { src: shot2, alt: 'Ralph Cibis bei der Arbeit', label: 'Backstage' },
+  { src: shot3, alt: 'Ralph Cibis im Gespräch', label: 'Soundcheck' },
+  { src: shot4, alt: 'Ralph Cibis on stage', label: 'Encore' },
+];
+
+const { hero, sections, cta } = landing;
+const story = sections.find((s) => s.id === 'story')!;
+const haltung = sections.find((s) => s.id === 'haltung')!;
+const erfahrung = sections.find((s) => s.id === 'erfahrung')!;
+
+const ticketButtonClass =
+  'inline-flex items-center gap-2 bg-gradient-accent border-[3px] border-ink px-8 py-4 font-mono text-base font-bold uppercase tracking-[0.15em] text-ink no-underline transition-transform duration-100 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0_0_var(--color-neon-green)]';
+---
+
+<Layout
+  title="Ralph Cibis · Organisationsingenieur & Agile Punk"
+  description="Ralph Cibis entwickelt Menschen und designt Organisationen, die liefern – pragmatisch, ohne Bullshit. Organisationsentwicklung, agiles Coaching und Leadership für den Mittelstand."
+>
+  <Hero kicker={hero.kicker} headline={hero.headline} lead={hero.lead} />
+
+  {/* Promo shots — color images (R9/AC7) framed like a merch contact sheet.
+      astro:assets; the hero shot is eager (LCP), extras lazy and md+ only. */}
+  <div class="border-b-[3px] border-line bg-ink">
+    <div class="mx-auto w-full max-w-6xl px-5 py-12">
+      <div class="relative z-20">
+        <div class="aspect-[16/9] w-full overflow-hidden border-[3px] border-paper">
+          <Image
+            src={portrait}
+            alt="Ralph Cibis"
+            class="h-full w-full object-cover"
+            loading="eager"
+            fetchpriority="high"
+            widths={[480, 768, 1024, 1440]}
+            sizes="(min-width: 1024px) 1024px, 100vw"
+          />
+        </div>
+        <span
+          class="absolute -bottom-4 left-3 z-20 -rotate-3 border-[3px] border-ink bg-neon-green px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink sm:left-6"
+        >
+          Live on Stage · Deutschlandweit
+        </span>
+      </div>
+
+      {/* extra promo shots — larger screens only */}
+      <div class="mt-5 hidden gap-5 md:grid md:grid-cols-3">
+        {
+          gallery.map((g) => (
+            <div class="relative">
+              <div class="aspect-[4/5] w-full overflow-hidden border-[3px] border-paper">
+                <Image
+                  src={g.src}
+                  alt={g.alt}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  widths={[320, 480, 640]}
+                  sizes="(min-width: 1024px) 320px, 33vw"
+                />
+              </div>
+              <span class="absolute right-3 top-3 border-[3px] border-ink bg-paper px-2.5 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-[0.15em] text-ink">
+                {g.label}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  {/* Story */}
+  <Section id={story.id} kicker={story.kicker} title={story.title}>
+    <Prose>
+      <p>{story.body}</p>
+    </Prose>
+  </Section>
+
+  {/* Haltung — inverted neon statement block (high-impact, ink-on-gradient is AA). */}
+  <section
+    id={haltung.id}
+    class="scroll-mt-24 border-t-[3px] border-line bg-gradient-accent py-(--spacing-section) text-ink"
+  >
+    <div class="mx-auto w-full max-w-6xl px-5">
+      <p
+        class="mb-6 inline-block border-[3px] border-ink px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em]"
+      >
+        {haltung.kicker}
+      </p>
+      <h2 class="max-w-5xl text-[clamp(2rem,6.5vw,5rem)]">{haltung.title}</h2>
+      <p class="mt-7 max-w-3xl text-lg font-medium leading-relaxed sm:text-2xl">{haltung.body}</p>
+    </div>
+  </section>
+
+  {/* Experience as a TRACKLIST (music identity) */}
+  <Section id={erfahrung.id} kicker="Tracklist" title={erfahrung.title}>
+    <Prose class="mb-6">
+      <p>{erfahrung.body}</p>
+    </Prose>
+    <div class="border-b-[3px] border-line">
+      {
+        erfahrung.cards!.map((card, i) => (
+          <Card track={String(i + 1).padStart(2, '0')} period={card.period} title={card.title}>
+            {card.body}
+          </Card>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* Primary CTA — backstage pass; obfuscated mailto (R8/AC6), repointed in Epic 2. */}
+  <section id={cta.id} class="scroll-mt-24 border-t-[3px] border-line bg-ink py-(--spacing-section)">
+    <div class="mx-auto w-full max-w-3xl px-5">
+      <div class="border-[3px] border-paper bg-surface">
+        <div class="p-8 sm:p-12">
+          <p class="mb-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-gradient">
+            Backstage Pass · {cta.kicker}
+          </p>
+          <h2 class="text-[clamp(1.75rem,5vw,3.5rem)]">{cta.headline}</h2>
+          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
+          <div class="mt-8">
+            <MailtoLink subject="Anfrage über cib.is" class={ticketButtonClass}>
+              {cta.buttonLabel} →
+            </MailtoLink>
+          </div>
+        </div>
+        <div class="perforation h-[18px] border-t-[3px] border-dashed border-line" aria-hidden="true"></div>
+        <p class="px-8 pb-6 pt-4 font-mono text-xs uppercase tracking-[0.2em] text-muted sm:px-12">
+          Admit one · Request only · Antwort kommt persönlich
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

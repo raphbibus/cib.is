@@ -1,0 +1,30 @@
+---
+import { encode, CONTACT_EMAIL } from '@/lib/mailto';
+
+// Obfuscated mailto CTA (R8/AC6, A10). The address is emitted ONLY as an
+// XOR+base64 token in data-* attributes — no plaintext, no literal `mailto:`
+// in the source. The single shared inline decoder that binds every
+// `a[data-eml]` lives once in Layout.astro (no bundle, no island).
+interface Props {
+  subject?: string;
+  class?: string;
+  id?: string;
+  ['aria-label']?: string;
+}
+
+const { subject, class: cls = '', id, 'aria-label': ariaLabel } = Astro.props;
+const token = encode(CONTACT_EMAIL);
+const subjectToken = subject ? encode(subject) : '';
+---
+
+<a
+  href="#"
+  id={id}
+  class={cls}
+  data-eml={token}
+  data-subj={subjectToken}
+  rel="nofollow"
+  aria-label={ariaLabel}
+>
+  <slot />
+</a>

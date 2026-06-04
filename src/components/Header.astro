@@ -1,0 +1,47 @@
+---
+// Header (R16/AC14): wordmark + minimal in-page anchor links + a merch-style
+// "BOOKEN" button. The button sits OUTSIDE <nav> so the nav stays exactly the
+// two in-page anchors. Every nav href targets an id that exists on the page.
+const navLinks = [
+  { label: 'Story', href: '#story' },
+  { label: 'Kontakt', href: '#kontakt' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b-[3px] border-paper bg-ink/90 backdrop-blur">
+  <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-3.5">
+    <a
+      href="#hero"
+      class="font-display text-2xl tracking-wide"
+      aria-label="ralph cib.is — Startseite"
+    >
+      RALPH CIB<span class="text-gradient">.</span>IS
+    </a>
+
+    <div class="flex items-center gap-5 sm:gap-8">
+      <nav aria-label="Hauptnavigation" class="hidden sm:block">
+        <ul class="flex items-center gap-7">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="nav-underline font-mono text-xs font-medium uppercase tracking-[0.2em] text-paper"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <a
+        href="#kontakt"
+        class="bg-gradient-accent border-[3px] border-ink px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink no-underline transition-transform duration-100 hover:-translate-y-0.5"
+      >
+        Buchen
+      </a>
+    </div>
+  </div>
+</header>

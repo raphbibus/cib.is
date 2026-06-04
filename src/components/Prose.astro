@@ -1,0 +1,14 @@
+---
+// Long-form typographic wrapper (R5/A4). Keeps body copy readable within the
+// brutalist system; reused by the blog in Epic 3.
+interface Props {
+  class?: string;
+}
+const { class: cls = '' } = Astro.props;
+---
+
+<div
+  class={`max-w-2xl text-lg leading-relaxed text-muted [&_a]:text-neon-green [&_a]:underline [&_a]:underline-offset-4 [&_p+p]:mt-5 [&_strong]:font-semibold [&_strong]:text-paper ${cls}`}
+>
+  <slot />
+</div>

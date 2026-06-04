@@ -1,0 +1,39 @@
+---
+// Label + input primitive (R5/A4). Built now, consumed by the Epic 2 contact
+// form. Brutalist field with a visible focus ring.
+interface Props {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+  placeholder?: string;
+  textarea?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  name,
+  type = 'text',
+  required = false,
+  placeholder,
+  textarea = false,
+  class: cls = '',
+} = Astro.props;
+
+const fieldClass =
+  'w-full border-[3px] border-paper bg-surface px-4 py-3 font-body text-paper placeholder:text-muted focus:border-neon-green';
+---
+
+<label class={`block ${cls}`}>
+  <span class="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-paper">
+    {label}{required && <span class="text-neon-green"> *</span>}
+  </span>
+  {
+    textarea ? (
+      <textarea name={name} required={required} placeholder={placeholder} rows="5" class={fieldClass} />
+    ) : (
+      <input type={type} name={name} required={required} placeholder={placeholder} class={fieldClass} />
+    )
+  }
+</label>

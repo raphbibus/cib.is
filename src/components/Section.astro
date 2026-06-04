@@ -1,0 +1,34 @@
+---
+// Semantic <section> with an anchor id (R5/A4). The `id` is the scroll target
+// for Header nav links (T7). Optional "pass"-style kicker + poster heading.
+interface Props {
+  id: string;
+  kicker?: string;
+  title?: string;
+  class?: string;
+  headingLevel?: 2 | 3;
+}
+
+const { id, kicker, title, class: cls = '', headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<section id={id} class={`scroll-mt-24 border-t-[3px] border-line py-(--spacing-section) ${cls}`}>
+  <div class="mx-auto w-full max-w-6xl px-5">
+    {
+      (kicker || title) && (
+        <header class="mb-10">
+          {kicker && (
+            <p class="mb-5 inline-block border-[3px] border-paper px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em]">
+              {kicker}
+            </p>
+          )}
+          {title && (
+            <Heading class="max-w-4xl text-[clamp(2rem,6vw,4.5rem)]">{title}</Heading>
+          )}
+        </header>
+      )
+    }
+    <slot />
+  </div>
+</section>
