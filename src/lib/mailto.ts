@@ -10,7 +10,7 @@
  * This resists *trivial* scraping (regexes for `mailto:` / `@`); it is not
  * cryptography.
  */
-export const CONTACT_EMAIL = 'ralph@cib.is';
+export const CONTACT_EMAIL = 'website@cib.is';
 
 /** Single-byte XOR key. Kept in sync with the inline decoder in MailtoLink. */
 export const MAILTO_KEY = 0x2a;

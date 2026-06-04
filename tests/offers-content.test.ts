@@ -68,6 +68,19 @@ describe('content/offers', () => {
     expect(offers.cta.headline.length).toBeGreaterThan(0);
   });
 
+  // T4 / R3, AC3 — the Friday price carries the canonical §19 UStG no-VAT note,
+  // and no "zzgl. USt" / VAT line item appears anywhere in the offers content.
+  it('states the canonical §19 UStG no-VAT note on the 490 € price (R3/AC3)', () => {
+    expect(offers.friday.priceNote).toMatch(/Gemäß\s*§\s*19\s*UStG\s*wird\s*keine\s*Umsatzsteuer\s*berechnet/);
+  });
+
+  it('shows no VAT/USt surcharge line anywhere (R3/AC3)', () => {
+    const blob = JSON.stringify(offers);
+    expect(blob).not.toMatch(/zzgl\.?\s*USt/i);
+    expect(blob).not.toMatch(/zzgl\.?\s*MwSt/i);
+    expect(blob).not.toMatch(/zuzüglich\s+(Umsatzsteuer|Mehrwertsteuer)/i);
+  });
+
   it('contains no lorem-ipsum and is German (umlauts / ß present)', () => {
     const blob = JSON.stringify(offers).toLowerCase();
     expect(blob).not.toContain('lorem');

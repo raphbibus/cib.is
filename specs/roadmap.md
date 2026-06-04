@@ -30,7 +30,7 @@ This is the **big-picture roadmap**. Each epic is refined and implemented in its
 
 ---
 
-## The 4 Epics
+## The 5 Epics
 
 ### Epic 1 — Foundation & Landing Page
 **Goal:** A deployed, on-brand single-page presence telling Ralph's story.
@@ -87,3 +87,17 @@ This is the **big-picture roadmap**. Each epic is refined and implemented in its
 - **Go public:** remove `noindex`, confirm cib.is DNS/HTTPS, final production deploy
 
 **Browser-verifiable:** Imprint + Privacy reachable from every page's footer; sitemap/robots served; 404 works; Lighthouse ≥ 95; site live and indexable on cib.is.
+
+---
+
+### Epic 5 — Coherence Pass (Design & Voice)
+**Goal:** A post-launch consistency pass that makes the whole site feel like one piece — **more punk, more Mittelstand, more Ralph** — by unifying the design and the copy that grew across Epics 1–4. Refined/brainstormed in its own later session; this is the big-picture frame.
+
+**Scope:**
+- **Design coherence:** audit the styling actually shipped across landing, offers, blog (index + post), legal pages and 404; reconcile drift back into the Tailwind theme tokens (color, type scale, spacing, radii). Extract repeated patterns (CTA blocks, section headers, cards, buttons) into shared components so a token change propagates everywhere
+- **Voice coherence:** a single tone guide capturing the **punk × Mittelstand × Ralph** baseline — German register (consistent *Sie*/*du*), recurring terms ("agile punk", the Friday model / 490 € net = gross), the "no bullshit, no upselling" register. Then a copy pass over every surface (hero, offers, blog CTA, form labels & success state, footer, 404, legal-adjacent microcopy) to align voice, terminology, and rhythm
+- **Page structure:** minor restructuring only — consistent section rhythm, heading hierarchy, and CTA placement across pages; no new pages or features
+- **Learning artifact:** a living `/docs/voice-and-design.md` (voice guide + design-token/component reference) read at the start of every future refinement, alongside `architecture.md` + `coding-guidelines.md`
+- **Stay inside locked decisions:** static, zero-JS, self-hosted fonts, no new third-party requests, no cookie banner; preserve a11y (WCAG AA, visible focus) and the Lighthouse ≥ 95 budget; no regressions to existing tests/e2e or the live funnel
+
+**Browser-verifiable:** All pages share one visual system (tokens/components, not page-local one-offs); copy reads in one consistent voice with consistent *Sie*/*du* and terminology; section/CTA rhythm is consistent page-to-page; existing unit + e2e tests still pass and Lighthouse stays ≥ 95.

@@ -36,8 +36,22 @@ describe('production build output', () => {
     expect(html).toMatch(/<meta[^>]+name=["']robots["'][^>]+content=["']noindex,nofollow["']/i);
   });
 
+  it('emits og:image and twitter:image for link previews (AC10)', () => {
+    const ogImage = html.match(
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i,
+    );
+    const twitterImage = html.match(
+      /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i,
+    );
+    expect(ogImage, 'og:image meta').not.toBeNull();
+    expect(twitterImage, 'twitter:image meta').not.toBeNull();
+    // Both point at the same raster OG asset (PNG/JPEG render on social scrapers).
+    expect(twitterImage![1]).toBe(ogImage![1]);
+    expect(twitterImage![1]).toMatch(/\.(png|jpg|jpeg)$/i);
+  });
+
   it('does not leak the plaintext contact address into the HTML (AC6)', () => {
-    expect(html).not.toContain('ralph@cib.is');
-    expect(html).not.toContain('mailto:ralph');
+    expect(html).not.toContain('website@cib.is');
+    expect(html).not.toContain('mailto:website');
   });
 });

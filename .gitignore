@@ -28,3 +28,6 @@ specs/**/*.pdf
 
 # Private editorial notes from the blog migration — never commit (R14/AC8)
 editorial-notes.md
+
+# Playwright MCP click-through artifacts (verify-epic)
+.playwright-mcp/

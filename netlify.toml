@@ -1,18 +1,35 @@
 # Netlify config for cib.is (static Astro). See docs/deployment.md.
-# Continuous deploy: every push to `main` builds and deploys to ralphcibis.netlify.app.
+# Continuous deploy: every push to `main` builds and deploys to the production
+# context (canonical host https://www.cib.is, TD1).
 
 [build]
   command = "npm run build"
   publish = "dist"
 
-# Indexing guard (defence-in-depth with the <meta robots> in Layout).
-# Until Epic 4 ships Impressum + Datenschutz, keep the site out of search
-# indexes. SINGLE REMOVAL POINT for go-public: drop this header AND the
-# <meta name="robots"> in src/components/BaseHead.astro.
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
+# Canonical host (TD1): the production primary is www.cib.is (works best with
+# Netlify's load balancer). 301 the apex AND the old netlify.app subdomain to it
+# so canonical / OG / sitemap all resolve to a single host (no duplicate
+# content). force = true so these win over any served file.
+[[redirects]]
+  from = "/*"
+  to = "https://www.cib.is/:splat"
+  status = 301
+  force = true
+  conditions = { Host = ["cib.is"] }
+
+[[redirects]]
+  from = "/*"
+  to = "https://www.cib.is/:splat"
+  status = 301
+  force = true
+  conditions = { Host = ["ralphcibis.netlify.app"] }
+
+# Indexing (TD2): robots state is context-driven and baked into the <meta
+# robots> tag at build time (process.env.CONTEXT in src/lib/seo.ts) — production
+# indexes, every other context stays noindex. NO unconditional X-Robots-Tag
+# noindex header lives here, so production is crawlable. Non-production deploys
+# (deploy-preview / branch-deploy subdomains) additionally get Netlify's
+# automatic X-Robots-Tag: noindex as defence-in-depth.
 
 # Long-cache the hashed, immutable build assets (fonts, images, css).
 [[headers]]

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const EMAIL = 'ralph@cib.is';
+const EMAIL = 'website@cib.is';
 
 // T10 — the obfuscated mailto fallback on the Offers page (R10, AC9). The raw
 // HTML must not leak the address; the fallback (surfaced in the error state,

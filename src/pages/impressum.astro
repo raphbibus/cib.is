@@ -1,0 +1,49 @@
+---
+import Layout from '@/components/Layout.astro';
+import Section from '@/components/Section.astro';
+import Prose from '@/components/Prose.astro';
+import MailtoLink from '@/components/MailtoLink.astro';
+import { impressum } from '@/content/legal';
+
+// Impressum (§5 DDG) — Epic 4 (R2, R3, R7). All copy comes from the typed
+// legal.ts module; the email is the obfuscated MailtoLink (no plaintext / no
+// raw mailto: in the HTML). Second quick-contact channel is a phone number
+// (per IHK — §5 DDG requires a means of fast direct contact).
+const { name, address, ustId, kleinunternehmerNote, phone } = impressum;
+// tel: href in E.164 — strip spaces, replace the German leading 0 with +49.
+const telHref = `tel:+49${phone.replace(/\s+/g, '').replace(/^0/, '')}`;
+---
+
+<Layout
+  title="Impressum · cib.is"
+  description="Impressum und Anbieterkennzeichnung nach §5 DDG für die Website cib.is von Ralph Cibis."
+>
+  <Section id="impressum" kicker="Pflichtangaben" title="Impressum">
+    <Prose>
+      <h2>Angaben gemäß §5 DDG</h2>
+      <p>
+        <strong>{name}</strong><br />
+        {address.map((line) => (<>{line}<br /></>))}
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail:{' '}
+        <MailtoLink subject="Anfrage über cib.is">website [at] cib [dot] is</MailtoLink>
+      </p>
+      <p>
+        Telefon: <a href={telHref}>{phone}</a>
+      </p>
+
+      <h2>Umsatzsteuer</h2>
+      <p>
+        Umsatzsteuer-Identifikationsnummer gemäß §27a UStG (USt-IdNr):<br />
+        <strong>{ustId}</strong>
+      </p>
+      <p>{kleinunternehmerNote}</p>
+
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>{name}, Anschrift wie oben.</p>
+    </Prose>
+  </Section>
+</Layout>
