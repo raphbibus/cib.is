@@ -76,6 +76,7 @@ describe('global.css @theme brand tokens (T4/R4)', () => {
     const ink = token('--color-ink');
     expect(contrast(token('--color-neon-pink'), ink)).toBeGreaterThanOrEqual(4.5);
     expect(contrast(token('--color-neon-green'), ink)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(token('--color-neon-cyan'), ink)).toBeGreaterThanOrEqual(4.5);
   });
 
   it('neon pink works as a focus ring (≥ 3:1 non-text on both paper and ink)', () => {

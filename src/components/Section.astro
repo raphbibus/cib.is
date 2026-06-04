@@ -1,25 +1,47 @@
 ---
 // Semantic <section> with an anchor id (R5/A4). The `id` is the scroll target
 // for Header nav links (T7). Optional "pass"-style kicker + poster heading.
+//
+// Optional `accent` (Epic 2): tints the kicker + adds a top accent bar so a run
+// of sections (e.g. the three offers) reads as visually distinct blocks. Neon
+// stays text-on-dark / decorative per the contrast contract. Default = none, so
+// Epic 1 callers are unaffected.
 interface Props {
   id: string;
   kicker?: string;
   title?: string;
   class?: string;
   headingLevel?: 2 | 3;
+  accent?: 'pink' | 'green' | 'cyan';
 }
 
-const { id, kicker, title, class: cls = '', headingLevel = 2 } = Astro.props;
+const { id, kicker, title, class: cls = '', headingLevel = 2, accent } = Astro.props;
 const Heading = `h${headingLevel}` as 'h2' | 'h3';
+
+const accentBar = {
+  pink: 'bg-neon-pink',
+  green: 'bg-neon-green',
+  cyan: 'bg-neon-cyan',
+};
+const accentKicker = {
+  pink: 'border-neon-pink text-neon-pink',
+  green: 'border-neon-green text-neon-green',
+  cyan: 'border-neon-cyan text-neon-cyan',
+};
+const kickerCls = accent ? accentKicker[accent] : 'border-paper';
 ---
 
-<section id={id} class={`scroll-mt-24 border-t-[3px] border-line py-(--spacing-section) ${cls}`}>
+<section
+  id={id}
+  class={`relative scroll-mt-24 border-t-[3px] border-line py-(--spacing-section) ${cls}`}
+>
+  {accent && <div class={`absolute inset-x-0 top-0 h-1.5 ${accentBar[accent]}`} aria-hidden="true" />}
   <div class="mx-auto w-full max-w-6xl px-5">
     {
       (kicker || title) && (
         <header class="mb-10">
           {kicker && (
-            <p class="mb-5 inline-block border-[3px] border-paper px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em]">
+            <p class={`mb-5 inline-block border-[3px] ${kickerCls} px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em]`}>
               {kicker}
             </p>
           )}

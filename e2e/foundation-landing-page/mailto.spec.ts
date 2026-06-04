@@ -15,15 +15,12 @@ test.describe('obfuscated mailto + footer', () => {
     expect(html).not.toContain('mailto:' + EMAIL.split('@')[0]);
   });
 
-  test('CTA mailto resolves to the correct address after interaction (AC6)', async ({ page }) => {
+  test('primary landing CTA leads into the Offers funnel (Epic 2 R9/AC8)', async ({ page }) => {
     await page.goto('/');
-    const cta = page.getByRole('link', { name: /Schreib mir/i });
+    // Epic 2 repointed the landing CTA from a mailto to the Offers page.
+    const cta = page.getByRole('link', { name: /Angebot ansehen/i });
     await expect(cta).toBeVisible();
-    // before interaction the href is just a placeholder
-    await expect(cta).toHaveAttribute('href', '#');
-    // focusing reveals the assembled mailto (keyboard path)
-    await cta.focus();
-    await expect(cta).toHaveAttribute('href', new RegExp(`^mailto:${EMAIL}`));
+    await expect(cta).toHaveAttribute('href', '/angebot');
   });
 
   test('footer shows wordmark, copyright, working mailto and no live legal links (AC15)', async ({

@@ -1,17 +1,15 @@
 ---
-// Header (R16/AC14): wordmark + minimal in-page anchor links + a merch-style
-// "BOOKEN" button. The button sits OUTSIDE <nav> so the nav stays exactly the
-// two in-page anchors. Every nav href targets an id that exists on the page.
-const navLinks = [
-  { label: 'Story', href: '#story' },
-  { label: 'Kontakt', href: '#kontakt' },
-];
+// Header (R16/AC14): wordmark + minimal nav + a merch-style "Buchen" button.
+// The button sits OUTSIDE <nav>. The wordmark and "Story" both lead back to the
+// start page (Story to its section there); "Buchen" leads into the offers
+// funnel. Header is global, so links are absolute routes, not in-page anchors.
+const navLinks = [{ label: 'Story', href: '/#story' }];
 ---
 
 <header class="sticky top-0 z-50 border-b-[3px] border-paper bg-ink/90 backdrop-blur">
   <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-3.5">
     <a
-      href="#hero"
+      href="/"
       class="font-display text-2xl tracking-wide"
       aria-label="ralph cib.is — Startseite"
     >
@@ -37,7 +35,7 @@ const navLinks = [
       </nav>
 
       <a
-        href="#kontakt"
+        href="/angebot"
         class="bg-gradient-accent border-[3px] border-ink px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink no-underline transition-transform duration-100 hover:-translate-y-0.5"
       >
         Buchen

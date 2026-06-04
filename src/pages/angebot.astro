@@ -1,0 +1,89 @@
+---
+import Layout from '@/components/Layout.astro';
+import Section from '@/components/Section.astro';
+import Card from '@/components/Card.astro';
+import Prose from '@/components/Prose.astro';
+import Button from '@/components/Button.astro';
+import PriceTag from '@/components/PriceTag.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import { offers } from '@/content/offers';
+
+// Offers & Contact funnel (Epic 2). One scrolling page: top CTA → intro →
+// three offers in priority order (R3) → the Friday product + price (R1/R2/R4) →
+// bottom CTA → on-page contact form (R5–R12). A single primary CTA style
+// (Button variant="solid") repeated top + bottom, both anchoring to the form
+// section #kontakt (R9/AC8).
+const { cta, intro, offers: offerList, friday, form } = offers;
+const formAnchor = `#${cta.id}`;
+---
+
+<Layout
+  title="Angebot · Der Freitag — Ralph Cibis"
+  description="Ein Freitag bei euch, 490 € netto = brutto: Leadership, Organisationsentwicklung und agiles Coaching – pragmatisch, ohne Bullshit. Jetzt anfragen."
+>
+  {/* Top CTA hero — single primary CTA + price on first paint (R4/R9/AC3). */}
+  <section class="border-b-[3px] border-line bg-ink py-(--spacing-section)">
+    <div class="mx-auto w-full max-w-6xl px-5">
+      <p class="mb-5 inline-block border-[3px] border-paper px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-[0.2em]">
+        {cta.label}
+      </p>
+      <h1 class="max-w-4xl text-[clamp(2.25rem,6.5vw,5rem)]">{cta.headline}</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
+      <div class="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+        <Button href={formAnchor} variant="solid" size="lg">{cta.label} →</Button>
+        <PriceTag price={friday.price} note={friday.priceNote} />
+      </div>
+    </div>
+  </section>
+
+  {/* Intro to the three offers */}
+  <Section id="angebot-intro" kicker={intro.kicker} title={intro.title}>
+    <Prose>
+      <p>{intro.body}</p>
+    </Prose>
+  </Section>
+
+  {/* Three offers in priority order: leadership → org dev → agile (R3/AC2).
+      Each gets a distinct accent (pink / green / gradient) + the middle one a
+      raised surface, so they read as three separate offers. */}
+  {
+    offerList.map((offer, i) => {
+      const accent = (['pink', 'green', 'cyan'] as const)[i];
+      return (
+        <Section
+          id={offer.id}
+          kicker={offer.kicker}
+          title={offer.title}
+          accent={accent}
+          class={i === 1 ? 'bg-surface' : ''}
+        >
+          <Prose>
+            <p>{offer.body}</p>
+          </Prose>
+        </Section>
+      );
+    })
+  }
+
+  {/* The Friday — the product (R1). Price + net=gross + travel + delivery all
+      visible on first paint, no interaction (R2/R4/R8/AC1/AC3/AC7). */}
+  <Section id={friday.id} kicker={friday.kicker} title={friday.title}>
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-start">
+      <Prose>
+        <p>{friday.body}</p>
+        <p><strong>Lieferung:</strong> {friday.delivery}</p>
+        <p><strong>Reisekosten:</strong> {friday.travelNote}</p>
+      </Prose>
+      <PriceTag price={friday.price} note={friday.priceNote} class="lg:sticky lg:top-24" />
+    </div>
+    <div class="mt-10">
+      <Button href={formAnchor} variant="solid" size="lg">{cta.label} →</Button>
+    </div>
+  </Section>
+
+  {/* On-page contact form section — the CTA anchor target (R5–R12/R9). */}
+  <Section id={cta.id} kicker="Kontakt" title={cta.headline}>
+    <p class="mb-8 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
+    <ContactForm />
+  </Section>
+</Layout>
