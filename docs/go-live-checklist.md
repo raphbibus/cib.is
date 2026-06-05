@@ -1,15 +1,20 @@
 # Go-Live Checklist — cib.is
 
-The site is `noindex` everywhere except the Netlify **production** deploy context
-(see [`src/lib/seo.ts`](../src/lib/seo.ts) — `robotsForContext`). Going public is therefore
-**not a manual flag flip**: it is the first production deploy made *after* every gate below
-passes. This document is the gate (R6/AC6).
+> **Status: LIVE — went public 2026-06-05.** The site is indexed; the go-public deploy flipped
+> the default robots state to `index,follow` (commit "Go public: index the live site"). The
+> gates below remain the record of what was verified before launch, and §2/§3 are kept as the
+> cutover/rollback runbook. To take the site **back** to non-indexed, see §3.
 
-> **Indexing model (TD2).** `robots` is derived from `process.env.CONTEXT` at build time.
-> `production` → `index,follow`; deploy-preview / branch-deploy / local → `noindex,nofollow`.
-> Netlify additionally adds an automatic `X-Robots-Tag: noindex` to non-production deploy
+Going public was **not a manual flag flip** on the live page: it was the first production deploy
+made *after* every gate below passed, plus the one-time change of the robots default
+(see [`src/lib/seo.ts`](../src/lib/seo.ts) — `robotsForContext`). This document is the gate (R6/AC6).
+
+> **Indexing model (TD2, post-go-public).** `robots` is derived from `process.env.CONTEXT` at
+> build time. `production` **and** local/unset builds → `index,follow`; only **deploy-preview**
+> and **branch-deploy** → `noindex,nofollow`, so work-in-progress URLs never leak into search.
+> Netlify additionally adds an automatic `X-Robots-Tag: noindex` to those non-production deploy
 > subdomains as defence-in-depth. There is **no** unconditional noindex header in
-> `netlify.toml`, so a production deploy is crawlable.
+> `netlify.toml`, so the production site is crawlable.
 
 ## 1. Hard gates — ALL must pass before the production deploy
 
@@ -42,8 +47,9 @@ passes. This document is the gate (R6/AC6).
 ## 2. Cutover (dedicated deploy)
 
 1. Confirm the working tree is the exact reviewed commit (no drift).
-2. Deploy to the **production** context (push to `main`). `CONTEXT=production` flips the baked
-   `<meta robots>` to `index,follow` and Netlify drops its automatic preview-noindex.
+2. Deploy to the **production** context (push to `main`). The robots default is now `index,follow`
+   (go-public change), and the production `CONTEXT` keeps the baked `<meta robots>` at
+   `index,follow` while Netlify drops its automatic preview-noindex.
 3. Verify on the live `https://www.cib.is`:
    - `view-source` shows `<meta name="robots" content="index,follow">`.
    - Response headers contain **no** `X-Robots-Tag: noindex`.
