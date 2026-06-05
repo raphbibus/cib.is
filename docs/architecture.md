@@ -1,7 +1,8 @@
 # Architecture — cib.is
 
 How the cib.is site is built and shipped. Read this (with
-[coding-guidelines.md](coding-guidelines.md)) before refining or implementing any epic.
+[coding-guidelines.md](coding-guidelines.md) and [voice-and-design.md](voice-and-design.md))
+before refining or implementing any epic.
 
 ## Stack
 

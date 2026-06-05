@@ -1,0 +1,18 @@
+---
+// Decorative 8-bit pixel spark (Epic 5 — R9/AC9, TD3). Inlines the committed
+// same-origin SVG asset (no extra request, no new @font-face, zero JS) and tints
+// it via `currentColor`, so callers set the colour with a text-* utility. Purely
+// decorative → aria-hidden. The optional blink animation is CSS-only and is
+// suppressed under prefers-reduced-motion (see global.css).
+import sparkRaw from '@/assets/img/pixel-spark.svg?raw';
+
+interface Props {
+  /** add the stepped 8-bit blink animation */
+  animate?: boolean;
+  class?: string;
+}
+const { animate = true, class: cls = '' } = Astro.props;
+const className = ['inline-flex', animate ? 'pixel-blink' : '', cls].filter(Boolean).join(' ');
+---
+
+<span class={className} aria-hidden="true" set:html={sparkRaw}></span>

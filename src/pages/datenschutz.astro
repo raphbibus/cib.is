@@ -30,19 +30,19 @@ const { controller, sections, retention, rights, supervisoryAuthority } = datens
       <h2>Speicherdauer</h2>
       <p>{retention}</p>
 
-      <h2>Deine Rechte</h2>
-      <p>Dir stehen nach der DSGVO folgende Rechte zu:</p>
+      <h2>Ihre Rechte</h2>
+      <p>Ihnen stehen nach der DSGVO folgende Rechte zu:</p>
       <ul>
         {rights.map((right) => (<li>{right}</li>))}
       </ul>
       <p>
-        Zum Wahrnehmen dieser Rechte schreib mir einfach eine{' '}
+        Zum Wahrnehmen dieser Rechte schreiben Sie mir einfach eine{' '}
         <MailtoLink subject="Datenschutz-Anfrage">E-Mail</MailtoLink>.
       </p>
 
       <h2>Beschwerderecht bei der Aufsichtsbehörde</h2>
       <p>
-        Unabhängig davon hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde
+        Unabhängig davon haben Sie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde
         zu beschweren. Die für mich zuständige Aufsichtsbehörde ist:<br />
         <strong>
           {supervisoryAuthority.map((line, i) => (

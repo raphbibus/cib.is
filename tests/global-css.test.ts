@@ -85,3 +85,54 @@ describe('global.css @theme brand tokens (T4/R4)', () => {
     expect(contrast(pink, token('--color-ink'))).toBeGreaterThanOrEqual(3);
   });
 });
+
+// T5 / R5, R9 / AC5, AC9 — the unified `primary` CTA (TD1) is a gradient FILL with
+// INK text on top (`bg-gradient-accent border-ink text-ink`). The reconciliation
+// folds the old inline `ticketButtonClass` into one place that references the
+// `--color-neon-green` token for its hover shadow. Both gradient endpoints must
+// keep the ink-text-on-neon-fill leg of the contrast contract (≥ 4.5:1).
+describe('unified primary CTA fill contract (T5/AC9)', () => {
+  it('ink text on the neon gradient fill (both endpoints) meets WCAG AA (≥ 4.5:1)', () => {
+    const ink = token('--color-ink');
+    expect(contrast(ink, token('--color-neon-pink'))).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(ink, token('--color-neon-green'))).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('the hover-shadow accent colour token (--color-neon-green) is defined', () => {
+    // The primary variant draws its hard-shadow from this token, not a raw hex.
+    expect(css).toMatch(/--color-neon-green:\s*#[0-9a-fA-F]{6}/);
+  });
+});
+
+// T6 / R9 / AC9 (TD3) — 8-bit pixel accents bring the identity to life, with two
+// hard guards: CSS-only motion suppressed under prefers-reduced-motion, and NO
+// new pixel webfont (accents are committed inline SVG instead).
+describe('8-bit accent motion safety (T6/AC9/TD3)', () => {
+  it('defines a CSS-only pixel-blink keyframe + utility', () => {
+    expect(css).toMatch(/@keyframes\s+pixel-blink/);
+    expect(css).toMatch(/\.pixel-blink\s*{[^}]*animation:/);
+  });
+
+  it('neutralizes the pixel-blink animation under prefers-reduced-motion', () => {
+    // After a reduced-motion media open, .pixel-blink must be turned off.
+    expect(css).toMatch(
+      /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.pixel-blink\s*{[^}]*animation:\s*none/,
+    );
+  });
+
+  it('still guards the existing eq / nav-underline motion under reduced-motion', () => {
+    expect(css).toMatch(
+      /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*\.eq\s*>\s*span\s*{[^}]*animation:\s*none/,
+    );
+  });
+
+  it('adds no new webfont — every @font-face is a brand family, not a pixel font (TD3)', () => {
+    const faces = css.match(/@font-face\s*{[^}]*}/g) ?? [];
+    const allowed = ['Anton', 'IBM Plex Mono', 'Inter'];
+    expect(faces.length).toBeGreaterThanOrEqual(5);
+    for (const f of faces) {
+      const fam = f.match(/font-family:\s*"([^"]+)"/)?.[1];
+      expect(allowed, `unexpected @font-face family: ${fam}`).toContain(fam);
+    }
+  });
+});

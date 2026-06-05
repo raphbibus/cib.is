@@ -2,7 +2,7 @@
 // Brutalist button primitive (R5/A4). Renders an <a> when `href` is given,
 // otherwise a <button>. `data-variant` is exposed for e2e assertions (T5).
 interface Props {
-  variant?: 'solid' | 'outline';
+  variant?: 'solid' | 'outline' | 'primary';
   size?: 'md' | 'lg';
   href?: string;
   type?: 'button' | 'submit';
@@ -15,6 +15,11 @@ const { variant = 'solid', size = 'md', href, type = 'button', class: cls = '', 
 const base =
   'inline-flex items-center justify-center gap-2 font-mono font-bold uppercase tracking-[0.15em] border-[3px] no-underline transition-transform duration-100 hover:-translate-y-0.5';
 const variants = {
+  // `primary` (TD1): the single shared CTA treatment — the promoted landing→offers
+  // hover (green hard-shadow + diagonal nudge). Used for every button CTA outside
+  // header/footer. `solid`/`outline` stay as the chrome/secondary treatments.
+  primary:
+    'bg-gradient-accent border-ink text-ink hover:-translate-x-0.5 hover:shadow-[6px_6px_0_0_var(--color-neon-green)]',
   solid: 'bg-gradient-accent border-ink text-ink',
   outline: 'bg-transparent border-paper text-paper hover:bg-paper hover:text-ink',
 };
