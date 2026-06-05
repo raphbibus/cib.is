@@ -114,23 +114,25 @@ motion safety) per surface. The **two human columns** (subjective voice *quality
 
 | Surface | Register = Sie | Terminology | Tokens / no raw hex | Motion safe | Voice quality (Ralph) | Design coherence (Ralph) |
 | :--- | :--: | :--: | :--: | :--: | :--: | :--: |
-| Landing | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| Offers | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| Contact form + states | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| Blog (chrome/CTA) — first-person, exempt | ✅ (exempt) | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| Legal (Impressum/Datenschutz) | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| 404 | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
-| Chrome (Header/Footer) | ✅ | ✅ | ✅ | ✅ | ⬜ | ⬜ |
+| Landing | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Offers | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Contact form + states | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Blog (chrome/CTA) — first-person, exempt | ✅ (exempt) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Legal (Impressum/Datenschutz) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 404 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Chrome (Header/Footer) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **Mechanical pass:** ✅ green — verified by the automated suite (register scan clean on every funnel
 surface; `no-raw-hex` lint green; `global-css` reduced-motion + CTA-fill contracts green;
 `docs`/content/e2e green).
 
-> **Ralph's sign-off (R6/R10/AC4/AC6/AC10) — PENDING.**
-> The epic's voice/coherence ACs close only when Ralph reviews each surface for voice **and** design
-> coherence and approves `voice-and-design.md`. Record below:
+> **Ralph's sign-off (R6/R10/AC4/AC6/AC10) — ✅ APPROVED.**
+> Ralph reviewed each in-scope surface for voice **and** design coherence and approved the guide.
 >
-> - [ ] Voice + design coherence reviewed per surface — _signed: ____________ · date: __________
-> - [ ] `docs/voice-and-design.md` approved — _signed: ____________ · date: __________
+> - [x] Voice + design coherence reviewed per surface — _signed: Ralph Cibis (ralph.cibis@thomann.io) · date: 2026-06-05_
+> - [x] `docs/voice-and-design.md` approved — _signed: Ralph Cibis (ralph.cibis@thomann.io) · date: 2026-06-05_
+>
+> `docs/voice-and-design.md` is now the **approved, living** voice + design guide — read it at the
+> start of every future refinement.
 </content>
 </invoke>
