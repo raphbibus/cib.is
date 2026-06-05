@@ -6,6 +6,7 @@ import Prose from '@/components/Prose.astro';
 import Button from '@/components/Button.astro';
 import PriceTag from '@/components/PriceTag.astro';
 import ContactForm from '@/components/ContactForm.astro';
+import HaltungBlock from '@/components/HaltungBlock.astro';
 import { offers } from '@/content/offers';
 
 // Offers & Contact funnel (Epic 2). One scrolling page: top CTA → intro →
@@ -13,7 +14,7 @@ import { offers } from '@/content/offers';
 // bottom CTA → on-page contact form (R5–R12). A single primary CTA style
 // (Button variant="primary" — the unified treatment, Epic 5 R3/TD1) repeated
 // top + bottom, both anchoring to the form section #kontakt (R9/AC8).
-const { cta, intro, offers: offerList, friday, form } = offers;
+const { cta, intro, offers: offerList, friday, form, haltung } = offers;
 const formAnchor = `#${cta.id}`;
 ---
 
@@ -78,6 +79,24 @@ const formAnchor = `#${cta.id}`;
     </div>
     <div class="mt-10">
       <Button href={formAnchor} variant="primary" size="lg">{cta.label} →</Button>
+    </div>
+  </Section>
+
+  {/* "Warum ich das mache" — the honest two-way deal, between the product and
+      the form (epic R1/AC1). Plain Section chrome; the colour lives in the two
+      inner panels: reader's win (green) first so it stacks first on mobile
+      (R9/AC8), Ralph's experience trade (pink) second. No CTA inside (AC5). */}
+  <Section id={haltung.id} kicker={haltung.kicker} title={haltung.title}>
+    <Prose class="mb-10">
+      <p>{haltung.lead}</p>
+    </Prose>
+    <div class="grid gap-6 lg:grid-cols-2">
+      <HaltungBlock accent="green" label={haltung.reader.label} claim={haltung.reader.claim}>
+        {haltung.reader.body}
+      </HaltungBlock>
+      <HaltungBlock accent="pink" label={haltung.mine.label} claim={haltung.mine.claim}>
+        {haltung.mine.body}
+      </HaltungBlock>
     </div>
   </Section>
 

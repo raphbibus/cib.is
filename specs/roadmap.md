@@ -30,7 +30,7 @@ This is the **big-picture roadmap**. Each epic is refined and implemented in its
 
 ---
 
-## The 5 Epics
+## The 6 Epics
 
 ### Epic 1 — Foundation & Landing Page
 **Goal:** A deployed, on-brand single-page presence telling Ralph's story.
@@ -101,3 +101,31 @@ This is the **big-picture roadmap**. Each epic is refined and implemented in its
 - **Stay inside locked decisions:** static, zero-JS, self-hosted fonts, no new third-party requests, no cookie banner; preserve a11y (WCAG AA, visible focus) and the Lighthouse ≥ 95 budget; no regressions to existing tests/e2e or the live funnel
 
 **Browser-verifiable:** All pages share one visual system (tokens/components, not page-local one-offs); copy reads in one consistent voice with consistent *Sie*/*du* and terminology; section/CTA rhythm is consistent page-to-page; existing unit + e2e tests still pass and Lighthouse stays ≥ 95.
+
+---
+
+### Epic 6 — "Warum ich das mache" Section
+**Goal:** Add a short "why I'm doing this" section to `/angebot` so the offer reads as a genuine,
+self-aware compromise — *not* a cut-price knock-off of expensive consulting. It pre-empts the
+"why so cheap / what's the catch" question by naming the trade openly: the customer gets a consultant
+who hasn't lost touch with business reality; the other half of Ralph's pay is the experience he
+gathers working alongside them. Refined/brainstormed in its own session; this is the big-picture frame.
+
+**Scope:**
+- One new content section on `/angebot`, placed **between "Das Produkt" (Der Freitag, `#freitag`) and
+  "Kontakt" (`#kontakt`)**, titled along the lines of **"Warum ich das mache"**
+- Copy outlines the stance: skepticism toward over-priced consultants who sell hours full-time and
+  walk when it gets hard; the best mentors stay hands-on under real pressure in real companies/jobs;
+  Ralph wants to keep learning too — so the price is an honest two-way deal (reality-tested advice ↔
+  experience gained with customers), not a discount
+- Lives in `src/content/offers.ts` (no hard-coded strings in `.astro`), rendered via the existing
+  `Section`/`Prose` components; no new primary CTA introduced (the funnel keeps its single CTA → form)
+- Voice & register per `docs/voice-and-design.md`: formal **Sie**, punk-as-bait/credibility-as-close,
+  kein Bullshit/kein Upselling, "ich" for Ralph; terminology stays canonical (Der Freitag, 490 € netto = brutto)
+- **Stay inside locked decisions:** static, zero-JS, self-hosted fonts, no new third-party requests,
+  no cookie banner; preserve a11y (WCAG AA, visible focus, heading hierarchy) and the Lighthouse ≥ 95
+  budget; no regressions to existing tests/e2e or the live funnel
+
+**Browser-verifiable:** On `/angebot`, the new section renders between Der Freitag and the contact
+form with the new copy; heading hierarchy and section rhythm match the surrounding sections; copy is
+in consistent *Sie* voice; existing unit + e2e tests still pass and Lighthouse stays ≥ 95.
