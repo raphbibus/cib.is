@@ -1,9 +1,8 @@
 ---
-import MailtoLink from './MailtoLink.astro';
-
-// Footer (R17/AC15 + Epic 4 R7): wordmark + copyright + working obfuscated
-// mailto + live legal links. The Impressum/Datenschutz slots are now real
-// anchors on every page (go-public requirement).
+// Footer (R17/AC15 + Epic 4 R7): wordmark + copyright + live legal links.
+// The Impressum/Datenschutz slots are real anchors on every page (go-public
+// requirement). Contact lives in the contact form + Impressum, so the footer
+// no longer carries a mailto CTA.
 const year = new Date().getFullYear();
 const legalLinks = [
   { label: 'Impressum', href: '/impressum' },
@@ -20,11 +19,6 @@ const legalLinks = [
       </p>
 
       <nav aria-label="Footer" class="flex flex-col gap-3 sm:items-end">
-        <MailtoLink
-          class="font-mono text-sm font-medium uppercase tracking-[0.15em] text-paper underline underline-offset-4 hover:text-neon-green"
-        >
-          E-Mail schreiben
-        </MailtoLink>
         <ul class="flex gap-5">
           {/* Live link — keeps the blog discoverable where the header nav is hidden (mobile). */}
           <li>
