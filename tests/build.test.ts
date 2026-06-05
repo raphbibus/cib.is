@@ -32,8 +32,10 @@ describe('production build output', () => {
     expect(html).not.toMatch(/client:(load|idle|visible|media|only)/);
   });
 
-  it('keeps the noindex guard in the served HTML (AC9)', () => {
-    expect(html).toMatch(/<meta[^>]+name=["']robots["'][^>]+content=["']noindex,nofollow["']/i);
+  it('serves an indexable robots meta now the site is public (go-public)', () => {
+    // Live site: local/production builds index; only deploy-preview / branch-deploy
+    // builds (which set CONTEXT) stay noindex — covered by tests/seo.test.ts.
+    expect(html).toMatch(/<meta[^>]+name=["']robots["'][^>]+content=["']index,follow["']/i);
   });
 
   it('emits og:image and twitter:image for link previews (AC10)', () => {

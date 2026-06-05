@@ -66,10 +66,10 @@ Park merch sites), leaning into the music identity (Thomann):
   stylesheet request.
 
 **Lighthouse gate:** run `npm run preview` then `npm run lighthouse`. Current scores:
-Performance 99 · Accessibility 100 · Best-Practices 100. **SEO reports 66 by design** — the only
-failing audit is `is-crawlable`, because the site is deliberately `noindex,nofollow` until Epic 4
-(R11/AC9). Excluding that one audit, SEO is 100; it returns to 100 automatically at go-public when
-the noindex guard is removed.
+Performance 100 · Accessibility 100 · Best-Practices 100 · **SEO 100**. The site is now **live and
+public**, so production and local builds emit `index,follow` and `is-crawlable` passes. Only Netlify
+**deploy previews** and **branch deploys** stay `noindex,nofollow` (they set `CONTEXT`), keeping
+work-in-progress URLs out of search — see `src/lib/seo.ts`.
 
 ## Content authoring rules
 

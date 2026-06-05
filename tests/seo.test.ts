@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { buildMeta, SITE_URL } from '@/lib/seo';
 
-// T9 / R6 / TD2 — robots is context-driven: production indexes, every other
-// (preview / branch / local) stays noindex. T10 / TD1 — canonical host is www.
+// T9 / R6 / TD2 — robots is context-driven. The site is live: production AND
+// local builds index; only deploy-preview / branch-deploy stay noindex.
+// T10 / TD1 — canonical host is www.
 describe('lib/seo buildMeta', () => {
   const originalContext = process.env.CONTEXT;
   beforeEach(() => {
@@ -31,9 +32,9 @@ describe('lib/seo buildMeta', () => {
     expect(meta.robots).toBe('noindex,nofollow');
   });
 
-  it('defaults to noindex,nofollow when no context is set (local/safe default)', () => {
+  it('indexes by default when no context is set (live site / local build)', () => {
     const meta = buildMeta({ title: 'X', description: 'Y', path: '/' });
-    expect(meta.robots).toBe('noindex,nofollow');
+    expect(meta.robots).toBe('index,follow');
   });
 
   // T10 / TD1 — canonical host is the www subdomain (Netlify primary).

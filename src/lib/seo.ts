@@ -1,12 +1,11 @@
 /**
  * SEO / OG / robots meta builder (R6/R10/TD1/TD2).
  *
- * `robots` is **context-driven** (TD2): only the Netlify `production` deploy
- * context indexes; deploy previews, branch deploys and local builds stay
- * `noindex,nofollow`. This removes the risk of a stray manual edit indexing a
- * preview — go-public is just a production deploy, not a hand-flipped flag.
- * Netlify also auto-adds `X-Robots-Tag: noindex` to non-production deploys as
- * defence-in-depth (see netlify.toml).
+ * `robots` is **context-driven** (TD2). The site is now **live and public**, so
+ * production *and* local builds index; only Netlify **deploy previews** and
+ * **branch deploys** stay `noindex,nofollow`, so work-in-progress URLs never
+ * leak into search. Netlify also auto-adds `X-Robots-Tag: noindex` to those
+ * non-production deploys as defence-in-depth (see netlify.toml).
  *
  * Canonical host is `https://www.cib.is` (TD1) — Netlify's configured primary;
  * the apex and the old netlify.app subdomain 301 to it (netlify.toml).
@@ -43,12 +42,14 @@ function absolute(pathOrUrl: string): string {
 }
 
 /**
- * Index only in the Netlify production deploy context (TD2). Anything else —
- * deploy-preview, branch-deploy, or an unset CONTEXT (local build) — stays
- * out of search indexes.
+ * Go-public default (2026): the live site indexes. Only Netlify deploy previews
+ * and branch deploys — which always set CONTEXT — stay out of search indexes;
+ * production and unset/local builds index.
  */
 export function robotsForContext(context = process.env.CONTEXT): Robots {
-  return context === 'production' ? 'index,follow' : 'noindex,nofollow';
+  return context === 'deploy-preview' || context === 'branch-deploy'
+    ? 'noindex,nofollow'
+    : 'index,follow';
 }
 
 export function buildMeta({ title, description, path, ogImage, ogType }: MetaInput): Meta {
