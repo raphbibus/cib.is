@@ -85,7 +85,7 @@ export const offers: OffersContent = {
   cta: {
     id: 'kontakt',
     label: 'Freitag anfragen',
-    headline: 'Ein Freitag. Ein klarer Blick von außen.',
+    headline: 'Mein Freitag für Sie. Ein klarer Blick von außen.',
     body: 'Kein Abo, kein Paket, kein Berater-Theater. Schreiben Sie mir, woran es bei Ihnen hakt – ich melde mich persönlich und schlage einen Freitag vor.',
   },
 
@@ -106,7 +106,7 @@ export const offers: OffersContent = {
       id: 'org-dev',
       kicker: '02 · Organisationsentwicklung',
       title: 'Organisationen wie Systeme umbauen',
-      body: 'Die teuersten Bugs stecken nicht im Code, sondern in der Organisation drumherum – in Strukturen, die gegen die eigenen Leute arbeiten. Ich schaue mir an, wo Zuständigkeiten, Entscheidungswege und Anreize klemmen, und baue gemeinsam mit Ihnen um. Beobachten, verstehen, umbauen, messen – wie in der Technik, nur mit Menschen.',
+      body: 'Die teuersten Bugs stecken nicht im Code, sondern in der Organisation drumherum – in Strukturen, die gegen die eigenen Leute arbeiten. Ich schaue mir an, wo Zuständigkeiten, Entscheidungswege und Anreize klemmen, und baue gemeinsam mit Ihnen um. Beobachten, verstehen, umbauen, messen – wie in der Software-Entwicklung, nur mit Menschen.',
     },
     {
       id: 'agile',
@@ -119,7 +119,7 @@ export const offers: OffersContent = {
   friday: {
     id: 'freitag',
     kicker: 'Das Produkt',
-    title: 'Der Freitag',
+    title: 'Mein Freitag für Sie',
     body: 'Ein ganzer Freitag, nur mit Ihnen. Vormittags verstehe ich, woran es wirklich hakt – mit den Leuten, die es betrifft. Nachmittags arbeiten wir an einem konkreten Schritt nach vorn. Am Ende haben Sie keinen Foliensatz, sondern etwas, das Sie ab Montag anfassen können. Ein abgeschlossenes Ding, kein Einstieg in ein großes Programm.',
     price: '490 €',
     priceNote: 'Festpreis pro Freitag. Netto = brutto: Ich arbeite als Kleinunternehmer. Gemäß §19 UStG wird keine Umsatzsteuer berechnet.',
@@ -168,10 +168,10 @@ export const offers: OffersContent = {
     id: 'haltung',
     kicker: 'Haltung',
     title: 'Warum ich das mache',
-    lead: 'Ich misstraue Beratern, die das Beraten zum Vollzeitjob gemacht haben und davon leben, Stunden zu verkaufen. Die besten Mentoren bleiben mittendrin – in echten Firmen, unter echtem Druck – statt zu verschwinden, sobald es ungemütlich wird. Genau deshalb berate ich nur in Teilzeit.',
+    lead: 'Ich bin skeptisch bei Beratern, die das Beraten zum Vollzeitjob gemacht haben und davon leben, Stunden zu verkaufen. Die besten Mentoren bleiben mittendrin – in echten Firmen, unter echtem Druck – statt zu verschwinden, sobald es ungemütlich wird. Genau deshalb berate ich nur in Teilzeit.',
     reader: {
       label: 'Was Sie bekommen',
-      claim: 'Einen Berater, der den Boden unter den Füßen nicht verloren hat.',
+      claim: 'Einen pragmatischen Berater, der den Boden unter den Füßen nicht verloren hat.',
       body: 'Ich stehe selbst noch in der Verantwortung, treffe Entscheidungen und trage die Folgen. Was ich Ihnen rate, habe ich oft am Montag davor selbst gemacht. Kein Elfenbeinturm, keine Theorie von der Folie – sondern das, was unter echtem Druck trägt.',
     },
     mine: {

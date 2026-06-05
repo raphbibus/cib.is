@@ -20,8 +20,8 @@ export interface BlogCta {
 
 export const blogCta: BlogCta = {
   kicker: 'Und jetzt?',
-  headline: 'Wenn dich das anspricht, lass uns reden.',
-  body: 'Ich schreibe hier über das, womit ich arbeite: Führung, Organisation und die Frage, wie Teams wirklich liefern. Wenn bei euch gerade etwas davon klemmt, schau ich es mir an – einen Freitag lang, persönlich, ohne Berater-Theater.',
+  headline: 'Wenn Sie das anspricht, lassen Sie uns reden.',
+  body: 'Ich schreibe hier über das, womit ich arbeite: Führung, Organisation und die Frage, wie Teams wirklich liefern. Wenn bei Ihnen gerade etwas davon klemmt, schau ich es mir an – einen Freitag lang, persönlich, ohne Berater-Theater.',
   buttonLabel: 'Mein Angebot ansehen',
   href: '/angebot',
 };
