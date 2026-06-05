@@ -44,6 +44,30 @@ export interface OffersForm {
   mailtoFallbackLabel: string;
 }
 
+/**
+ * One panel of the "Warum ich das mache" / Haltung section — the honest two-way
+ * deal rendered as two side-by-side blocks (epic "Warum ich das mache" R9/R11).
+ */
+export interface HaltungBlock {
+  label: string; // block heading: "Was Sie bekommen" | "Was ich bekomme"
+  claim: string; // bold one-line punch (R11/AC10)
+  body: string; // 2–3 sentence paragraph, parallel structure (R11/AC10)
+}
+
+/**
+ * The "Warum ich das mache" section: a short consultant-skepticism hook (lead)
+ * then the two-way compromise as two labelled panels — the reader's win and
+ * Ralph's experience trade tied explicitly to the 490 € (R3–R5, R9–R11).
+ */
+export interface Haltung {
+  id: string; // "haltung" — stable anchor, not in nav (R10/AC9)
+  kicker: string; // "Haltung"
+  title: string; // "Warum ich das mache" (R2/AC1)
+  lead: string; // stance / hook above the panels (R3/AC2)
+  reader: HaltungBlock; // "Was Sie bekommen" — reality-tested consultant (R5/AC8)
+  mine: HaltungBlock; // "Was ich bekomme" — learning + the explicit 490 € trade (R4/R5/AC3)
+}
+
 export interface OffersContent {
   /** repeated single primary CTA + the form section heading (R9) */
   cta: { id: string; label: string; headline: string; body: string };
@@ -54,6 +78,7 @@ export interface OffersContent {
   form: OffersForm;
   confirmation: { headline: string; body: string }; // "persönlich, binnen 2 Werktage" (R11/AC10)
   error: { body: string }; // inline submit-failure copy (R12/AC11)
+  haltung: Haltung; // "Warum ich das mache" — the honest two-way deal (epic)
 }
 
 export const offers: OffersContent = {
@@ -133,5 +158,26 @@ export const offers: OffersContent = {
 
   error: {
     body: 'Das Absenden hat gerade nicht geklappt. Ihre Eingaben stehen noch da – versuchen Sie es gleich nochmal, oder schreiben Sie mir direkt.',
+  },
+
+  // "Warum ich das mache" — answers the unspoken "warum so günstig?" head-on:
+  // punk hook, then the honest two-way deal. Reader's win (green) ↔ Ralph's
+  // experience trade tied to the 490 € (pink). Sie-register; draft flagged for
+  // Ralph's editorial sign-off (= his merge instruction, PRD D10).
+  haltung: {
+    id: 'haltung',
+    kicker: 'Haltung',
+    title: 'Warum ich das mache',
+    lead: 'Ich misstraue Beratern, die das Beraten zum Vollzeitjob gemacht haben und davon leben, Stunden zu verkaufen. Die besten Mentoren bleiben mittendrin – in echten Firmen, unter echtem Druck – statt zu verschwinden, sobald es ungemütlich wird. Genau deshalb berate ich nur in Teilzeit.',
+    reader: {
+      label: 'Was Sie bekommen',
+      claim: 'Einen Berater, der den Boden unter den Füßen nicht verloren hat.',
+      body: 'Ich stehe selbst noch in der Verantwortung, treffe Entscheidungen und trage die Folgen. Was ich Ihnen rate, habe ich oft am Montag davor selbst gemacht. Kein Elfenbeinturm, keine Theorie von der Folie – sondern das, was unter echtem Druck trägt.',
+    },
+    mine: {
+      label: 'Was ich bekomme',
+      claim: 'Erfahrung, die ich mir sonst nirgends kaufen kann.',
+      body: 'Jeder Freitag bei Ihnen bringt mir neue Situationen, neue Branchen, neue Menschen – Erfahrung, die mich als Berater besser macht. Diese Erfahrung ist der zweite Teil meiner Bezahlung. Deshalb liegt der Preis bewusst bei 490 € – das ist kein Rabatt, sondern ein ehrlicher Tausch.',
+    },
   },
 };

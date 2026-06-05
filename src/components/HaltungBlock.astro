@@ -1,0 +1,34 @@
+---
+// One accent-washed panel of the "Warum ich das mache" / Haltung section
+// (epic "Warum ich das mache" R9/R11/AC8/AC10). The honest two-way deal is two
+// of these side by side: the reader's win (green) ↔ Ralph's experience trade
+// (pink). Each is a dark, opaque accent-tinted panel with a neon accent border;
+// body copy stays on the dark tint so it clears WCAG AA (contrast contract —
+// neon is the decorative border, never text on a light fill). All colours via
+// @theme tokens (no raw hex → no-raw-hex.test.ts stays green).
+//
+// Heading is <h3> so the section reads h2 (Section title) → h3 (panel label),
+// keeping the hierarchy valid (AC7).
+interface Props {
+  accent: 'pink' | 'green'; // selects bg tint token + neon border colour
+  label: string; // block heading, e.g. "Was Sie bekommen"
+  claim: string; // bold one-line punch
+  class?: string; // merged last (coding-guidelines)
+}
+
+const { accent, label, claim, class: cls = '' } = Astro.props;
+
+const tint = { pink: 'bg-tint-pink', green: 'bg-tint-green' };
+const border = { pink: 'border-neon-pink', green: 'border-neon-green' };
+const labelColor = { pink: 'text-neon-pink', green: 'text-neon-green' };
+---
+
+<article class={`border-l-[6px] ${border[accent]} ${tint[accent]} p-7 sm:p-9 ${cls}`}>
+  <h3 class={`mb-4 font-mono text-xs font-bold uppercase tracking-[0.2em] ${labelColor[accent]}`}>
+    {label}
+  </h3>
+  <p class="text-xl font-semibold leading-snug text-paper sm:text-2xl">{claim}</p>
+  <p class="mt-4 leading-relaxed text-muted">
+    <slot />
+  </p>
+</article>

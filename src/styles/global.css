@@ -59,6 +59,14 @@
   --color-neon-cyan: #2de2e6;  /* third accent (agile) — 12.3:1 on ink */
   --gradient-accent: linear-gradient(115deg, var(--color-neon-pink) 10%, var(--color-neon-green) 90%);
 
+  /* Haltung panel fills ("Warum ich das mache") — opaque near-black with a
+     pink / green cast. Kept dark so bone + muted body text clears WCAG AA on
+     the tint (neon stays the decorative border, never text on a light fill):
+     paper-on-tint-pink 12.9:1 · muted-on-tint-pink 8.1:1
+     paper-on-tint-green 11.4:1 · muted-on-tint-green 7.2:1 */
+  --color-tint-pink: #2a1320;
+  --color-tint-green: #102a16;
+
   --font-display: "Anton", "Arial Narrow", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;

@@ -104,6 +104,30 @@ describe('unified primary CTA fill contract (T5/AC9)', () => {
   });
 });
 
+// T2 (epic "Warum ich das mache") / R8, R9 / AC8 — the two Haltung panel tints.
+// Each panel gets an OPAQUE dark accent-washed background defined as a #rrggbb
+// token in @theme. The contract: the fill stays dark enough that bone body text
+// (`--color-paper`) AND muted body text (`--color-muted`) keep ≥ 4.5:1 on it —
+// neon appears only as the decorative border, never as text on a light fill.
+describe('Haltung tint tokens keep body text WCAG AA (T2/AC8)', () => {
+  it('defines opaque dark tint tokens for both panels', () => {
+    expect(css).toMatch(/--color-tint-pink:\s*#[0-9a-fA-F]{6}/);
+    expect(css).toMatch(/--color-tint-green:\s*#[0-9a-fA-F]{6}/);
+  });
+
+  it('paper (bone) body text meets AA on both tints (≥ 4.5:1)', () => {
+    const paper = token('--color-paper');
+    expect(contrast(paper, token('--color-tint-pink'))).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(paper, token('--color-tint-green'))).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('muted secondary body text meets AA on both tints (≥ 4.5:1)', () => {
+    const muted = token('--color-muted');
+    expect(contrast(muted, token('--color-tint-pink'))).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(muted, token('--color-tint-green'))).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
 // T6 / R9 / AC9 (TD3) — 8-bit pixel accents bring the identity to life, with two
 // hard guards: CSS-only motion suppressed under prefers-reduced-motion, and NO
 // new pixel webfont (accents are committed inline SVG instead).
