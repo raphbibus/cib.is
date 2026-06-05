@@ -69,22 +69,22 @@ export const datenschutz: Datenschutz = {
       heading: 'Überblick: keine Cookies, kein Tracking',
       body: [
         'Diese Website kommt ohne Cookies, ohne Analyse- oder Tracking-Dienste und ohne Werbe-Netzwerke aus. Es werden keine Daten an Drittanbieter weitergegeben und keine Inhalte von fremden Servern nachgeladen. Deshalb gibt es hier auch keinen Cookie-Banner – es gibt schlicht nichts zuzustimmen.',
-        'Personenbezogene Daten verarbeiten wir nur in zwei Fällen: technisch notwendige Server-Logs beim Aufruf der Seite und die Angaben, die du uns über das Kontaktformular freiwillig schickst.',
+        'Personenbezogene Daten verarbeiten wir nur in zwei Fällen: technisch notwendige Server-Logs beim Aufruf der Seite und die Angaben, die Sie uns über das Kontaktformular freiwillig schicken.',
       ],
     },
     {
       heading: 'Hosting und Formulare über Netlify (USA)',
       body: [
         'Diese Website wird bei der Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, USA gehostet. Netlify verarbeitet als Auftragsverarbeiter im Sinne des Art. 28 DSGVO die technisch notwendigen Verbindungsdaten (insbesondere die IP-Adresse, Datum und Uhrzeit des Zugriffs, abgerufene Seite, Browsertyp – sogenannte Server-Logfiles).',
-        'Auch die Übermittlung des Kontaktformulars läuft über Netlify Forms. Dabei werden die von dir eingegebenen Angaben (Name, E-Mail-Adresse, optional Unternehmen und Rolle sowie deine Nachricht) an Netlify übertragen und an uns weitergeleitet.',
-        'Rechtsgrundlage für die Server-Logfiles ist unser berechtigtes Interesse am sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO). Rechtsgrundlage für die Verarbeitung deiner Formularangaben ist die Bearbeitung deiner Anfrage bzw. die Anbahnung eines Vertrags (Art. 6 Abs. 1 lit. b DSGVO).',
+        'Auch die Übermittlung des Kontaktformulars läuft über Netlify Forms. Dabei werden die von Ihnen eingegebenen Angaben (Name, E-Mail-Adresse, optional Unternehmen und Rolle sowie Ihre Nachricht) an Netlify übertragen und an uns weitergeleitet.',
+        'Rechtsgrundlage für die Server-Logfiles ist unser berechtigtes Interesse am sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO). Rechtsgrundlage für die Verarbeitung Ihrer Formularangaben ist die Bearbeitung Ihrer Anfrage bzw. die Anbahnung eines Vertrags (Art. 6 Abs. 1 lit. b DSGVO).',
         'Da Netlify ein US-Unternehmen ist, kann es zu einer Übermittlung von Daten in die USA kommen. Mit Netlify besteht ein Auftragsverarbeitungsvertrag (Data Processing Agreement, DPA), der die EU-Standardvertragsklauseln (Standard Contractual Clauses, SCC) einschließt, um ein angemessenes Datenschutzniveau für die Übermittlung in die USA sicherzustellen.',
       ],
     },
     {
       heading: 'Kontaktaufnahme',
       body: [
-        'Wenn du uns über das Formular oder per E-Mail kontaktierst, verarbeiten wir deine Angaben ausschließlich, um deine Anfrage zu beantworten. Es findet kein Newsletter-Versand, keine Profilbildung und keine Weitergabe zu Werbezwecken statt.',
+        'Wenn Sie uns über das Formular oder per E-Mail kontaktieren, verarbeiten wir Ihre Angaben ausschließlich, um Ihre Anfrage zu beantworten. Es findet kein Newsletter-Versand, keine Profilbildung und keine Weitergabe zu Werbezwecken statt.',
       ],
     },
   ],

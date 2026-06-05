@@ -61,13 +61,13 @@ export const offers: OffersContent = {
     id: 'kontakt',
     label: 'Freitag anfragen',
     headline: 'Ein Freitag. Ein klarer Blick von außen.',
-    body: 'Kein Abo, kein Paket, kein Berater-Theater. Schreib mir, woran es bei euch hakt – ich melde mich persönlich und schlage einen Freitag vor.',
+    body: 'Kein Abo, kein Paket, kein Berater-Theater. Schreiben Sie mir, woran es bei Ihnen hakt – ich melde mich persönlich und schlage einen Freitag vor.',
   },
 
   intro: {
     kicker: 'Das Angebot',
     title: 'Drei Wege, eine Haltung: erst verstehen, dann bauen.',
-    body: 'Ich verkaufe keine Methode von der Stange. Je nachdem, wo es klemmt, arbeiten wir an der Führung, an der Organisation oder an der Art, wie eure Teams liefern. Alles drei läuft über dasselbe Format – einen Freitag bei euch.',
+    body: 'Ich verkaufe keine Methode von der Stange. Je nachdem, wo es klemmt, arbeiten wir an der Führung, an der Organisation oder an der Art, wie Ihre Teams liefern. Alles drei läuft über dasselbe Format – einen Freitag bei Ihnen.',
   },
 
   offers: [
@@ -81,13 +81,13 @@ export const offers: OffersContent = {
       id: 'org-dev',
       kicker: '02 · Organisationsentwicklung',
       title: 'Organisationen wie Systeme umbauen',
-      body: 'Die teuersten Bugs stecken nicht im Code, sondern in der Organisation drumherum – in Strukturen, die gegen die eigenen Leute arbeiten. Ich schaue mir an, wo Zuständigkeiten, Entscheidungswege und Anreize klemmen, und baue gemeinsam mit euch um. Beobachten, verstehen, umbauen, messen – wie in der Technik, nur mit Menschen.',
+      body: 'Die teuersten Bugs stecken nicht im Code, sondern in der Organisation drumherum – in Strukturen, die gegen die eigenen Leute arbeiten. Ich schaue mir an, wo Zuständigkeiten, Entscheidungswege und Anreize klemmen, und baue gemeinsam mit Ihnen um. Beobachten, verstehen, umbauen, messen – wie in der Technik, nur mit Menschen.',
     },
     {
       id: 'agile',
       kicker: '03 · Agiles Coaching',
       title: 'Agil ohne Buzzword-Bingo',
-      body: 'Scrum, Kanban, OKR – ich kenne die Verfahren aus der Praxis, bete sie aber nicht an. Wenn ein Team verlässlicher liefern und besser zusammenarbeiten soll, zählt nicht das Framework auf der Folie, sondern was bei euch tatsächlich funktioniert. Oft ist die Antwort weniger Methode und mehr gesunder Menschenverstand.',
+      body: 'Scrum, Kanban, OKR – ich kenne die Verfahren aus der Praxis, bete sie aber nicht an. Wenn ein Team verlässlicher liefern und besser zusammenarbeiten soll, zählt nicht das Framework auf der Folie, sondern was bei Ihnen tatsächlich funktioniert. Oft ist die Antwort weniger Methode und mehr gesunder Menschenverstand.',
     },
   ],
 
@@ -95,11 +95,11 @@ export const offers: OffersContent = {
     id: 'freitag',
     kicker: 'Das Produkt',
     title: 'Der Freitag',
-    body: 'Ein ganzer Freitag, nur mit euch. Vormittags verstehe ich, woran es wirklich hakt – mit den Leuten, die es betrifft. Nachmittags arbeiten wir an einem konkreten Schritt nach vorn. Am Ende habt ihr keinen Foliensatz, sondern etwas, das ihr ab Montag anfassen könnt. Ein abgeschlossenes Ding, kein Einstieg in ein großes Programm.',
+    body: 'Ein ganzer Freitag, nur mit Ihnen. Vormittags verstehe ich, woran es wirklich hakt – mit den Leuten, die es betrifft. Nachmittags arbeiten wir an einem konkreten Schritt nach vorn. Am Ende haben Sie keinen Foliensatz, sondern etwas, das Sie ab Montag anfassen können. Ein abgeschlossenes Ding, kein Einstieg in ein großes Programm.',
     price: '490 €',
     priceNote: 'Festpreis pro Freitag. Netto = brutto: Ich arbeite als Kleinunternehmer. Gemäß §19 UStG wird keine Umsatzsteuer berechnet.',
     travelNote: 'Reisekosten transparent on top: Ab etwa 2 Stunden Anfahrt kommt immer eine Hotelübernachtung dazu. Die Fahrt – egal ob Bahn oder Auto – berechne ich pauschal mit 30 Cent pro Kilometer ab Bamberg Hauptbahnhof. Sonst nichts.',
-    delivery: 'Standard ist vor Ort bei euch – da entsteht das meiste. Remote geht auf Anfrage, wenn es nicht anders passt.',
+    delivery: 'Standard ist vor Ort bei Ihnen – da entsteht das meiste. Remote geht auf Anfrage, wenn es nicht anders passt.',
   },
 
   form: {
@@ -116,22 +116,22 @@ export const offers: OffersContent = {
     submitLabel: 'Freitag anfragen',
     honeypotName: 'firma-nachname', // plausible-looking trap field; real users never see it
     errors: {
-      name: 'Bitte gib deinen Namen an.',
-      email: 'Bitte gib deine E-Mail-Adresse an.',
+      name: 'Bitte geben Sie Ihren Namen an.',
+      email: 'Bitte geben Sie Ihre E-Mail-Adresse an.',
       emailFormat: 'Diese E-Mail-Adresse sieht nicht gültig aus.',
-      message: 'Bitte beschreib kurz, worum es geht.',
-      captcha: 'Die Antwort stimmt nicht ganz – rechne nochmal nach.',
+      message: 'Bitte beschreiben Sie kurz, worum es geht.',
+      captcha: 'Die Antwort stimmt nicht ganz – rechnen Sie nochmal nach.',
     },
-    privacyNote: 'Deine Angaben nutze ich nur, um dir persönlich zu antworten. Keine Newsletter, kein Tracking, keine Weitergabe.',
-    mailtoFallbackLabel: 'Schreib mir direkt eine E-Mail',
+    privacyNote: 'Ihre Angaben nutze ich nur, um Ihnen persönlich zu antworten. Keine Newsletter, kein Tracking, keine Weitergabe.',
+    mailtoFallbackLabel: 'Schreiben Sie mir direkt eine E-Mail',
   },
 
   confirmation: {
     headline: 'Anfrage ist da. Danke!',
-    body: 'Ich melde mich persönlich – in der Regel binnen 2 Werktage – und schlage dir einen konkreten Freitag vor. Kein Automat, keine Warteschleife.',
+    body: 'Ich melde mich persönlich – in der Regel binnen 2 Werktage – und schlage Ihnen einen konkreten Freitag vor. Kein Automat, keine Warteschleife.',
   },
 
   error: {
-    body: 'Das Absenden hat gerade nicht geklappt. Deine Eingaben stehen noch da – versuch es gleich nochmal, oder schreib mir direkt.',
+    body: 'Das Absenden hat gerade nicht geklappt. Ihre Eingaben stehen noch da – versuchen Sie es gleich nochmal, oder schreiben Sie mir direkt.',
   },
 };

@@ -163,6 +163,15 @@
   .nav-underline:hover::after,
   .nav-underline:focus-visible::after { transform: scaleX(1); }
 
+  /* 8-bit pixel accent (TD3) — stepped opacity gives a chunky arcade "blink"
+     rather than a smooth fade. CSS-only; the inline SVG inherits currentColor.
+     Suppressed under prefers-reduced-motion below. */
+  .pixel-blink { animation: pixel-blink 1.8s steps(2, jump-none) infinite; }
+  @keyframes pixel-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
   /* Ticket / backstage-pass perforation edge. */
   .perforation {
     background-image: radial-gradient(circle, var(--color-ink) 0 5px, transparent 5px);
@@ -174,5 +183,6 @@
   @media (prefers-reduced-motion: reduce) {
     .eq > span { animation: none; }
     .nav-underline::after { transition: none; }
+    .pixel-blink { animation: none; }
   }
 }

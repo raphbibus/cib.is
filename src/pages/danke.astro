@@ -13,14 +13,14 @@ const { confirmation } = offers;
 
 <Layout
   title="Danke · cib.is"
-  description="Deine Anfrage ist angekommen. Ralph Cibis meldet sich persönlich, in der Regel binnen 2 Werktage."
+  description="Ihre Anfrage ist angekommen. Ralph Cibis meldet sich persönlich, in der Regel binnen 2 Werktage."
 >
   <Section id="danke" kicker="Anfrage gesendet" title={confirmation.headline}>
     <Prose>
       <p>{confirmation.body}</p>
     </Prose>
     <div class="mt-8">
-      <Button href="/angebot" variant="outline" size="lg">← Zurück zum Angebot</Button>
+      <Button href="/angebot" variant="primary" size="lg">← Zurück zum Angebot</Button>
     </div>
   </Section>
 </Layout>

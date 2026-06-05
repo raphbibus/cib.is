@@ -10,7 +10,7 @@ import MailtoLink from '@/components/MailtoLink.astro';
 
 <Layout
   title="404 · Seite nicht gefunden — cib.is"
-  description="Diese Seite gibt es nicht (mehr). Zurück zum Anfang, zum Angebot – oder schreib mir."
+  description="Diese Seite gibt es nicht (mehr). Zurück zum Anfang, zum Angebot – oder schreiben Sie mir."
 >
   <section class="border-t-[3px] border-line py-(--spacing-section)">
     <div class="mx-auto w-full max-w-6xl px-5">
@@ -26,13 +26,13 @@ import MailtoLink from '@/components/MailtoLink.astro';
       </p>
 
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-        <Button href="/" variant="solid" size="lg">← Zur Startseite</Button>
-        <Button href="/angebot" variant="outline" size="lg">Zum Angebot</Button>
+        <Button href="/" variant="primary" size="lg">← Zur Startseite</Button>
+        <Button href="/angebot" variant="primary" size="lg">Zum Angebot</Button>
         <MailtoLink
           subject="Hilfe, ein toter Link auf cib.is"
           class="font-mono text-sm font-medium uppercase tracking-[0.15em] text-paper underline underline-offset-4 hover:text-neon-green"
         >
-          Schreib mir
+          Schreiben Sie mir
         </MailtoLink>
       </div>
     </div>

@@ -57,7 +57,7 @@ export const landing: Landing = {
       id: 'haltung',
       kicker: 'Die Haltung',
       title: 'Kein Bullshit. Kein Upselling. Keine heilige Methode.',
-      body: 'Ich verkaufe keine Methode von der Stange. Ich schaue zuerst, was bei euch wirklich klemmt, und baue dann gemeinsam mit euch die Lösung – egal, ob am Ende ein bekanntes Verfahren wie Scrum draufsteht oder schlicht gesunder Menschenverstand. Die gängigen Methoden kenne ich aus der Praxis; ich bete sie nur nicht an.',
+      body: 'Ich verkaufe keine Methode von der Stange. Ich schaue zuerst, was bei Ihnen wirklich klemmt, und baue dann gemeinsam mit Ihnen die Lösung – egal, ob am Ende ein bekanntes Verfahren wie Scrum draufsteht oder schlicht gesunder Menschenverstand. Die gängigen Methoden kenne ich aus der Praxis; ich bete sie nur nicht an.',
     },
     {
       id: 'erfahrung',
@@ -103,7 +103,7 @@ export const landing: Landing = {
     id: 'kontakt',
     kicker: 'Der nächste Schritt',
     headline: 'Lust auf eine Organisation, die nicht gegen sich selbst arbeitet?',
-    body: 'Aktuell berate ich in Teilzeit – fokussiert, ehrlich, in überschaubaren Einheiten. Das konkrete Angebot ist ein Freitag bei euch. Schau es dir an.',
+    body: 'Aktuell berate ich in Teilzeit – fokussiert, ehrlich, in überschaubaren Einheiten. Das konkrete Angebot ist ein Freitag bei Ihnen. Schauen Sie es sich an.',
     buttonLabel: 'Angebot ansehen',
   },
 };

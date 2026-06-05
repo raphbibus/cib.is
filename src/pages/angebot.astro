@@ -11,15 +11,15 @@ import { offers } from '@/content/offers';
 // Offers & Contact funnel (Epic 2). One scrolling page: top CTA → intro →
 // three offers in priority order (R3) → the Friday product + price (R1/R2/R4) →
 // bottom CTA → on-page contact form (R5–R12). A single primary CTA style
-// (Button variant="solid") repeated top + bottom, both anchoring to the form
-// section #kontakt (R9/AC8).
+// (Button variant="primary" — the unified treatment, Epic 5 R3/TD1) repeated
+// top + bottom, both anchoring to the form section #kontakt (R9/AC8).
 const { cta, intro, offers: offerList, friday, form } = offers;
 const formAnchor = `#${cta.id}`;
 ---
 
 <Layout
   title="Angebot · Der Freitag — Ralph Cibis"
-  description="Ein Freitag bei euch, 490 € netto = brutto: Leadership, Organisationsentwicklung und agiles Coaching – pragmatisch, ohne Bullshit. Jetzt anfragen."
+  description="Ein Freitag bei Ihnen, 490 € netto = brutto: Leadership, Organisationsentwicklung und agiles Coaching – pragmatisch, ohne Bullshit. Jetzt anfragen."
 >
   {/* Top CTA hero — single primary CTA + price on first paint (R4/R9/AC3). */}
   <section class="border-b-[3px] border-line bg-ink py-(--spacing-section)">
@@ -30,7 +30,7 @@ const formAnchor = `#${cta.id}`;
       <h1 class="max-w-4xl text-[clamp(2.25rem,6.5vw,5rem)]">{cta.headline}</h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
       <div class="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-        <Button href={formAnchor} variant="solid" size="lg">{cta.label} →</Button>
+        <Button href={formAnchor} variant="primary" size="lg">{cta.label} →</Button>
         <PriceTag price={friday.price} note={friday.priceNote} />
       </div>
     </div>
@@ -77,7 +77,7 @@ const formAnchor = `#${cta.id}`;
       <PriceTag price={friday.price} note={friday.priceNote} class="lg:sticky lg:top-24" />
     </div>
     <div class="mt-10">
-      <Button href={formAnchor} variant="solid" size="lg">{cta.label} →</Button>
+      <Button href={formAnchor} variant="primary" size="lg">{cta.label} →</Button>
     </div>
   </Section>
 

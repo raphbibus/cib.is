@@ -1,6 +1,8 @@
 # Coding Guidelines — cib.is
 
-Conventions for building cib.is. Read with [architecture.md](architecture.md).
+Conventions for building cib.is. Read with [architecture.md](architecture.md) and
+[voice-and-design.md](voice-and-design.md) (the living voice + design guide — read at the start of
+every refinement).
 
 ## Component patterns
 

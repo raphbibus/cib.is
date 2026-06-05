@@ -24,14 +24,15 @@ test.describe('offers page structure & funnel wiring', () => {
 
   test('uses exactly one primary-CTA style and repeats it top + bottom (AC8)', async ({ page }) => {
     await page.goto('/angebot');
-    // Only one data-variant style is used for buttons on the page.
+    // Epic 5 (R3/TD1): every body button CTA now uses the unified `primary`
+    // variant — so the page's button styles collapse to exactly that one.
     const variants = await page
       .locator('[data-variant]')
       .evaluateAll((els) => Array.from(new Set(els.map((e) => e.getAttribute('data-variant')))));
-    expect(variants).toEqual(['solid']);
+    expect(variants).toEqual(['primary']);
 
     // CTA links to the form anchor appear at least twice (top + bottom).
-    const ctas = page.locator('a[href="#kontakt"][data-variant="solid"]');
+    const ctas = page.locator('a[href="#kontakt"][data-variant="primary"]');
     expect(await ctas.count()).toBeGreaterThanOrEqual(2);
   });
 

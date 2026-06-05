@@ -4,6 +4,8 @@ import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import Card from '@/components/Card.astro';
 import Prose from '@/components/Prose.astro';
+import Button from '@/components/Button.astro';
+import PixelAccent from '@/components/PixelAccent.astro';
 import { Image } from 'astro:assets';
 import portrait from '@/assets/img/hero.webp';
 import shot2 from '@/assets/img/promo-1.webp';
@@ -23,9 +25,6 @@ const { hero, sections, cta } = landing;
 const story = sections.find((s) => s.id === 'story')!;
 const haltung = sections.find((s) => s.id === 'haltung')!;
 const erfahrung = sections.find((s) => s.id === 'erfahrung')!;
-
-const ticketButtonClass =
-  'inline-flex items-center gap-2 bg-gradient-accent border-[3px] border-ink px-8 py-4 font-mono text-base font-bold uppercase tracking-[0.15em] text-ink no-underline transition-transform duration-100 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-[6px_6px_0_0_var(--color-neon-green)]';
 ---
 
 <Layout
@@ -126,18 +125,19 @@ const ticketButtonClass =
     <div class="mx-auto w-full max-w-3xl px-5">
       <div class="border-[3px] border-paper bg-surface">
         <div class="p-8 sm:p-12">
-          <p class="mb-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-gradient">
-            Backstage Pass · {cta.kicker}
+          <p class="mb-5 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.25em]">
+            <PixelAccent class="text-neon-green" />
+            <span class="text-gradient">Backstage Pass · {cta.kicker}</span>
           </p>
           <h2 class="text-[clamp(1.75rem,5vw,3.5rem)]">{cta.headline}</h2>
           <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{cta.body}</p>
           <div class="mt-8">
-            {/* Epic 2 (R9/AC8): the landing primary CTA now leads into the
-                Offers funnel instead of opening a mailto. The obfuscated mailto
-                still lives in the Footer. */}
-            <a href="/angebot" class={ticketButtonClass}>
+            {/* Epic 2 (R9/AC8): the landing primary CTA leads into the Offers
+                funnel. Epic 5 (R3/TD1): routed through the shared
+                Button variant="primary" — the single unified CTA treatment. */}
+            <Button href="/angebot" variant="primary" size="lg">
               {cta.buttonLabel} →
-            </a>
+            </Button>
           </div>
         </div>
         <div class="perforation h-[18px] border-t-[3px] border-dashed border-line" aria-hidden="true"></div>
