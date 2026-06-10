@@ -23,14 +23,14 @@ const meta = buildMeta({ title, description, path, ogImage, ogType });
 
 <title>{meta.title}</title>
 <meta name="description" content={meta.description} />
-<!-- Indexing guard — removed only at Epic 4 go-public (mirrors X-Robots-Tag in netlify.toml). -->
+{/* Indexing guard — removed only at Epic 4 go-public (mirrors X-Robots-Tag in netlify.toml). */}
 <meta name="robots" content={meta.robots} />
 <link rel="canonical" href={meta.canonical} />
 
-<!-- RSS feed autodiscovery (so readers/browsers find the blog feed). -->
+{/* RSS feed autodiscovery (so readers/browsers find the blog feed). */}
 <link rel="alternate" type="application/rss+xml" title="cib.is — Blog" href="/rss.xml" />
 
-<!-- Open Graph -->
+{/* Open Graph */}
 <meta property="og:type" content={meta.ogType} />
 <meta property="og:site_name" content={meta.siteName} />
 <meta property="og:title" content={meta.title} />
@@ -40,10 +40,10 @@ const meta = buildMeta({ title, description, path, ogImage, ogType });
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content={meta.ogImage} />
 
-<!-- Favicon (swap public/favicon.svg to rebrand) -->
+{/* Favicon (swap public/favicon.svg to rebrand) */}
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="alternate icon" href="/favicon.ico" sizes="any" />
 
-<!-- Preload only the two above-the-fold faces to protect LCP (A3). -->
+{/* Preload only the two above-the-fold faces to protect LCP (A3). */}
 <link rel="preload" as="font" type="font/woff2" href={anton} crossorigin />
 <link rel="preload" as="font" type="font/woff2" href={inter400} crossorigin />
