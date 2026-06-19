@@ -19,6 +19,9 @@ const meta = buildMeta({ title, description, path, ogImage, ogType });
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+{/* Tints mobile browser chrome (esp. iOS Safari's translucent URL/status bar)
+    to match the ink stage, so scrolled content doesn't bleed through behind it. */}
+<meta name="theme-color" content="#0a0a0a" />
 <meta name="generator" content={Astro.generator} />
 
 <title>{meta.title}</title>
